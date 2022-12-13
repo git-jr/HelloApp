@@ -4,5 +4,7 @@ import br.com.alura.helloapp.data.Contato
 
 data class ListaContatosUiState(
     val contatos: List<Contato> = emptyList(),
-    val logado: Boolean = true
+    val logado: Boolean = true,
+    val mostrarCaixaDialogoAvalicao: Boolean = false,
+    val onMostrarCaixaDialogoAvalicao: (mostrar: Boolean) -> Unit = {}
 )

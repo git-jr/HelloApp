@@ -1,5 +1,6 @@
 package br.com.alura.helloapp.navigation
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -10,12 +11,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import br.com.alura.helloapp.DestinosHelloApp
+import br.com.alura.helloapp.preferences.PreferencesKey.NUMERO_SESSAO
 import br.com.alura.helloapp.preferences.dataStore
 import br.com.alura.helloapp.ui.home.ListaContatosTela
 import br.com.alura.helloapp.ui.home.ListaContatosViewModel
 import br.com.alura.helloapp.ui.navegaParaDetalhes
 import br.com.alura.helloapp.ui.navegaParaFormularioContato
 import br.com.alura.helloapp.ui.navegaParaLoginDeslogado
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.homeGraph(
@@ -47,6 +50,12 @@ fun NavGraphBuilder.homeGraph(
                     }
                 })
 
+            LaunchedEffect(Unit) {
+                val numeroSessao = dataStore.data.first()[NUMERO_SESSAO]
+                if (numeroSessao == 10) {
+                    state.onMostrarCaixaDialogoAvalicao(true)
+                }
+            }
         }
     }
 }

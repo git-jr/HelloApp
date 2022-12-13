@@ -22,6 +22,7 @@ import br.com.alura.helloapp.R
 import br.com.alura.helloapp.data.Contato
 import br.com.alura.helloapp.sampleData.contatosExemplo
 import br.com.alura.helloapp.ui.components.AsyncImagePerfil
+import br.com.alura.helloapp.ui.components.CaixaDialogoAvalicao
 import br.com.alura.helloapp.ui.theme.HelloAppTheme
 
 @Composable
@@ -52,6 +53,15 @@ fun ListaContatosTela(
                     onClickAbreDetalhes(idContato)
                 }
             }
+        }
+
+        if (state.mostrarCaixaDialogoAvalicao) {
+            CaixaDialogoAvalicao(onClickAvaliar = {
+                state.onMostrarCaixaDialogoAvalicao(false)
+                // Neste ponto, em uma aplicação real, poderíamos fazer a loja de apps ser aberta
+            }, onClickDispensar = {
+                state.onMostrarCaixaDialogoAvalicao(false)
+            })
         }
     }
 }

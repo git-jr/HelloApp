@@ -6,9 +6,7 @@ import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -107,10 +105,48 @@ fun CaixaDialogoImagem(
     )
 }
 
+@Composable
+fun CaixaDialogoAvalicao(
+    onClickAvaliar: () -> Unit = {},
+    onClickDispensar: () -> Unit = {},
+) {
+    AlertDialog(
+        onDismissRequest = onClickDispensar,
+        title = {
+            Text(text = "Está gostando do HelloApp?")
+        },
+        text = {
+            Text("Considere nos avaliar na loja de aplicativos")
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onClickAvaliar
+            ) {
+                Text("Avaliar")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onClickDispensar
+            ) {
+                Text("Agora não")
+            }
+        }
+    )
+}
+
 @Preview
 @Composable
 fun CaixaDialogoImagemPreview() {
     HelloAppTheme {
         CaixaDialogoImagem("")
+    }
+}
+
+@Preview
+@Composable
+fun CaixaDialogoAvalicaoPreview() {
+    HelloAppTheme {
+        CaixaDialogoAvalicao()
     }
 }
