@@ -106,33 +106,56 @@ fun CaixaDialogoImagem(
 }
 
 @Composable
-fun CaixaDialogoAvalicao(
+fun CaixaDialogoAvaliacao(
     onClickAvaliar: () -> Unit = {},
     onClickDispensar: () -> Unit = {},
+    onClickNaoMostrarMais: (exibirNovamente: Boolean) -> Unit = {},
+    monstrarNovamente: Boolean = true
 ) {
-    AlertDialog(
-        onDismissRequest = onClickDispensar,
-        title = {
-            Text(text = "Está gostando do HelloApp?")
-        },
-        text = {
-            Text("Considere nos avaliar na loja de aplicativos")
-        },
-        confirmButton = {
-            TextButton(
-                onClick = onClickAvaliar
+    Dialog(onDismissRequest = onClickDispensar,
+        content = {
+            Column(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(5))
+                    .widthIn(200.dp)
+                    .background(Color.White)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Avaliar")
+                Text("Está gostando do HelloApp?")
+                Spacer(Modifier.height(8.dp))
+                Text("Considere nos avaliar na loja de aplicativos")
+
+                Spacer(Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = monstrarNovamente,
+                        onCheckedChange = { onClickNaoMostrarMais(it) },
+                        colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colors.primary)
+                    )
+                    Text("Mostrar novamente", color = Color.Gray)
+                }
+
+
+                Spacer(Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onClickDispensar) {
+                        Text(text = "Agora não")
+                    }
+                    TextButton(onClick = onClickAvaliar) {
+                        Text(text = "Avaliar")
+                    }
+                }
             }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = onClickDispensar
-            ) {
-                Text("Agora não")
-            }
-        }
-    )
+        })
 }
 
 @Preview
@@ -145,8 +168,8 @@ fun CaixaDialogoImagemPreview() {
 
 @Preview
 @Composable
-fun CaixaDialogoAvalicaoPreview() {
+fun CaixaDialogoAvaliacaoPreview() {
     HelloAppTheme {
-        CaixaDialogoAvalicao()
+        CaixaDialogoAvaliacao()
     }
 }

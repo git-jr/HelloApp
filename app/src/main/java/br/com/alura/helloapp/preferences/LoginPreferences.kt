@@ -15,4 +15,6 @@ object PreferencesKey {
     val USUARIO = stringPreferencesKey("usuario")
     val LOGADO = booleanPreferencesKey("logado")
     val NUMERO_SESSAO = intPreferencesKey("numero_sessao")
+    val NUMERO_PROXIMA_SESSAO = intPreferencesKey("numero_proxima_sessao")
+    val SOLICITAR_AVALIACAO = booleanPreferencesKey("solicitar_avaliacao")
 }
