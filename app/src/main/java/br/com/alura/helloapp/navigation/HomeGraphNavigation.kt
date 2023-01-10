@@ -14,6 +14,7 @@ import br.com.alura.helloapp.preferences.dataStore
 import br.com.alura.helloapp.ui.home.ListaContatosTela
 import br.com.alura.helloapp.ui.home.ListaContatosViewModel
 import br.com.alura.helloapp.ui.navegaParaDetalhes
+import br.com.alura.helloapp.ui.navegaParaDialgoUsuarios
 import br.com.alura.helloapp.ui.navegaParaFormularioContato
 import br.com.alura.helloapp.ui.navegaParaLoginDeslogado
 import kotlinx.coroutines.launch
@@ -40,11 +41,12 @@ fun NavGraphBuilder.homeGraph(
                 onClickAbreCadastro = {
                     navController.navegaParaFormularioContato()
                 },
-                onClickDesloga = {
-                    coroutineScope.launch {
-                        viewModel.desloga()
-                        navController.navegaParaLoginDeslogado()
-                    }
+                onClickListaUsuarios = {
+                    navController.navegaParaDialgoUsuarios(state.idUsuarioAtual)
+//                    coroutineScope.launch {
+//                        viewModel.desloga()
+//                        navController.navegaParaLoginDeslogado()
+//                    }
                 })
 
         }

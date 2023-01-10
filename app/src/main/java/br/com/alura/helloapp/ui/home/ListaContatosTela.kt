@@ -28,12 +28,12 @@ import br.com.alura.helloapp.ui.theme.HelloAppTheme
 fun ListaContatosTela(
     state: ListaContatosUiState,
     modifier: Modifier = Modifier,
-    onClickDesloga: () -> Unit = {},
+    onClickListaUsuarios: () -> Unit = {},
     onClickAbreDetalhes: (Long) -> Unit = {},
     onClickAbreCadastro: () -> Unit = {},
 ) {
     Scaffold(
-        topBar = { AppBarListaContatos(onClickDesloga = onClickDesloga) },
+        topBar = { AppBarListaContatos(onClickListaUsuarios = onClickListaUsuarios) },
         floatingActionButton = {
             FloatingActionButton(
                 backgroundColor = MaterialTheme.colors.primary,
@@ -57,18 +57,21 @@ fun ListaContatosTela(
 }
 
 @Composable
-fun AppBarListaContatos(onClickDesloga: () -> Unit) {
+fun AppBarListaContatos(onClickListaUsuarios: () -> Unit) {
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.nome_do_app)) },
         actions = {
-            IconButton(
-                onClick = onClickDesloga
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ExitToApp,
-                    tint = Color.White,
-                    contentDescription = stringResource(R.string.deslogar)
+            Row {
+                AsyncImagePerfil(
+                    urlImagem = "contato.fotoPerfil",
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            onClickListaUsuarios()
+                        },
                 )
+                Spacer(modifier = Modifier.size(8.dp))
             }
         }
     )

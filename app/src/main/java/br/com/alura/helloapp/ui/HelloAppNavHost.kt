@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import br.com.alura.helloapp.DestinosHelloApp
 import br.com.alura.helloapp.DetalhesContato
 import br.com.alura.helloapp.FormularioContato
+import br.com.alura.helloapp.ListaUsuarios
 import br.com.alura.helloapp.navigation.*
 
 @Composable
@@ -25,6 +26,7 @@ fun HelloAppNavHost(
         homeGraph(navController)
         formularioContatoGraph(navController)
         detalhesContatoGraph(navController)
+        listaUsuarios(navController)
     }
 }
 
@@ -52,4 +54,8 @@ fun NavHostController.navegaParaFormularioContato(idContato: Long = 0L) {
 fun NavHostController.navegaParaLoginDeslogado() {
     popBackStack(DestinosHelloApp.ListaContatos.rota, true)
     navegaDireto(DestinosHelloApp.LoginGraph.rota)
+}
+
+fun NavHostController.navegaParaDialgoUsuarios(idUsuarioAtual: Long = 0L) {
+    navigate("${ListaUsuarios.rota}/$idUsuarioAtual")
 }
