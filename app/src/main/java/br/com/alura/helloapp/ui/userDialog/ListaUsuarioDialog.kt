@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +29,8 @@ import br.com.alura.helloapp.data.Usuario
 import br.com.alura.helloapp.sampleData.usuariosExemplo
 import br.com.alura.helloapp.ui.components.AsyncImagePerfil
 import br.com.alura.helloapp.ui.theme.HelloAppTheme
+import br.com.alura.helloapp.R
+import br.com.alura.helloapp.data.Contato
 
 
 @Composable
@@ -120,6 +123,54 @@ fun CaixaDialogoContasUsuario(
                         }
                     }
                 }
+
+                Column(
+                    Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        Modifier
+                            .padding(vertical = 8.dp)
+                            .heightIn(min = 32.dp)
+                            .clickable {},
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_action_filter_list),
+                            contentDescription = "Filtro",
+                            modifier = Modifier.weight(1F)
+                        )
+                        Text(
+                            text = "Mostrar todos os contatos",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.weight(5F)
+                        )
+                    }
+
+
+
+                    Row(
+                        Modifier
+                            .padding(vertical = 8.dp)
+                            .heightIn(min = 32.dp)
+                            .clickable {},
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_action_person_add),
+                            contentDescription = "Adicionar",
+                            modifier = Modifier.weight(1F)
+                        )
+                        Text(
+                            text = "Adicionar nova conta",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.weight(5F)
+                        )
+                    }
+                }
             }
         },
     )
@@ -172,7 +223,8 @@ fun CaixaDialogoContasUsuarioPreview() {
             ListaUsuariosUiState(
                 usuarioAtual = Usuario(
                     nome = "Quem está logado agora", nomeDeUsuario = "@user_atual"
-                )
+                ),
+                outrosUsuarios = listOf(usuariosExemplo.first())
             )
         )
     }
