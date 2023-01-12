@@ -30,9 +30,9 @@ val contatosExemplo: List<Contato> = listOf(
 val usuariosExemplo = listOf(
     Usuario(
         nome = "Manuel",
-        usuario = "@manuel_gomes"
+        nomeDeUsuario = "@manuel_gomes"
     ), Usuario(
         nome = "Clara",
-        usuario = "@clara123"
+        nomeDeUsuario = "@clara123"
     )
 )

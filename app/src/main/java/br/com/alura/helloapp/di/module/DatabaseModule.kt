@@ -1,9 +1,13 @@
 package br.com.alura.helloapp.di.module
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.database.HelloAppDatabase
+import br.com.alura.helloapp.database.converters.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +26,9 @@ class DatabaseModule {
             context,
             HelloAppDatabase::class.java,
             "helloApp.db"
-        ).build()
+        ).addMigrations(MIGRATION_1_2)
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

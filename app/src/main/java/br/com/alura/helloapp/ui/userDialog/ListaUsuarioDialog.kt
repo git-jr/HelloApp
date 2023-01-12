@@ -104,7 +104,7 @@ fun CaixaDialogoContasUsuario(
                             )
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
-                                text = state.usuarioAtual.usuario,
+                                text = state.usuarioAtual.nomeDeUsuario,
                                 color = Color.Gray
                             )
                         }
@@ -148,7 +148,7 @@ fun UsuarioItem(usuario: Usuario, onClickPerfiUsuario: (id: Long) -> Unit = {}) 
             )
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = usuario.usuario,
+                text = usuario.nomeDeUsuario,
                 color = Color.Gray,
                 fontSize = 12.sp
             )
@@ -171,7 +171,7 @@ fun CaixaDialogoContasUsuarioPreview() {
         CaixaDialogoContasUsuario(
             ListaUsuariosUiState(
                 usuarioAtual = Usuario(
-                    nome = "Quem está logado agora", usuario = "@user_atual"
+                    nome = "Quem está logado agora", nomeDeUsuario = "@user_atual"
                 )
             )
         )
