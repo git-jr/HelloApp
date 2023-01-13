@@ -22,4 +22,5 @@ data class FormularioContatoUiState(
     val onMostrarCaixaDialogoData: (mostrar: Boolean) -> Unit = {},
     val textoAniversairo: String = "",
     @StringRes val tituloAppbar: Int? = R.string.titulo_cadastro_contato,
+    val usuarioAtual: String = "",
 )

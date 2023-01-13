@@ -16,8 +16,6 @@ import br.com.alura.helloapp.ui.home.ListaContatosViewModel
 import br.com.alura.helloapp.ui.navegaParaDetalhes
 import br.com.alura.helloapp.ui.navegaParaDialgoUsuarios
 import br.com.alura.helloapp.ui.navegaParaFormularioContato
-import br.com.alura.helloapp.ui.navegaParaLoginDeslogado
-import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.homeGraph(
     navController: NavHostController
@@ -42,7 +40,7 @@ fun NavGraphBuilder.homeGraph(
                     navController.navegaParaFormularioContato()
                 },
                 onClickListaUsuarios = {
-                    navController.navegaParaDialgoUsuarios(state.idUsuarioAtual)
+                    navController.navegaParaDialgoUsuarios(state.usuarioAtual)
 //                    coroutineScope.launch {
 //                        viewModel.desloga()
 //                        navController.navegaParaLoginDeslogado()

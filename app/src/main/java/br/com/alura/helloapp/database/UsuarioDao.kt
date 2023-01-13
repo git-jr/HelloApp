@@ -2,7 +2,7 @@ package br.com.alura.helloapp.database
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy.*
 import androidx.room.Query
 import br.com.alura.helloapp.data.Usuario
 import kotlinx.coroutines.flow.Flow
@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UsuarioDao {
 
-    @Insert(onConflict = REPLACE)
-    fun insere(usuario: Usuario)
+    @Insert(onConflict = IGNORE)
+    suspend fun insere(usuario: Usuario): Long
 
     @Query("SELECT * FROM Usuario")
-    fun buscaTodos(): Flow<List<Usuario>?>
+    fun buscaTodos(): Flow<MutableList<Usuario>?>
 
-    @Query("SELECT * FROM Usuario WHERE id = :id")
-    fun buscaPorId(id: Long): Flow<Usuario?>
+    @Query("SELECT * FROM Usuario WHERE nomeDeUsuario = :nomeDeUsuario")
+    fun buscaPorNomeDeUsuario(nomeDeUsuario: String): Flow<Usuario?>
 }

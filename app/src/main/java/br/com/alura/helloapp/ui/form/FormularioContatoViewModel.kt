@@ -1,5 +1,7 @@
 package br.com.alura.helloapp.ui.form
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +10,9 @@ import br.com.alura.helloapp.data.Contato
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.extensions.converteParaDate
 import br.com.alura.helloapp.extensions.converteParaString
+import br.com.alura.helloapp.preferences.PreferencesKey
 import br.com.alura.helloapp.util.ID_CONTATO
+import br.com.alura.helloapp.util.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,10 +21,12 @@ import javax.inject.Inject
 @HiltViewModel
 class FormularioContatoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val contatoDao: ContatoDao
+    private val contatoDao: ContatoDao,
+    private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
     private val idContato = savedStateHandle.get<Long>(ID_CONTATO)
+    //private val usuarioAtual = savedStateHandle.get<String>(USUARIO_ATUAL)
 
     private val _uiState = MutableStateFlow(FormularioContatoUiState())
     val uiState: StateFlow<FormularioContatoUiState>
@@ -67,7 +73,7 @@ class FormularioContatoViewModel @Inject constructor(
 
     private suspend fun carregaContato() {
         idContato?.let {
-            val contato = contatoDao.buscaPorId(idContato)
+            val contato = contatoDao.buscaPorIdEUsuario(idContato, usuarioAtual = USUARIO_ATUAL)
             contato.collect {
                 it?.let {
                     with(it) {
@@ -78,7 +84,8 @@ class FormularioContatoViewModel @Inject constructor(
                             aniversario = aniversario,
                             telefone = telefone,
                             fotoPerfil = fotoPerfil,
-                            tituloAppbar = R.string.titulo_editar_contato
+                            tituloAppbar = R.string.titulo_editar_contato,
+                            usuarioAtual = nomeUsuario
                         )
                     }
                 }
@@ -101,6 +108,9 @@ class FormularioContatoViewModel @Inject constructor(
     }
 
     suspend fun salvar() {
+        val usuarioLogadoAtualmente =
+            dataStore.data.first()[PreferencesKey.USUARIO_ATUAL].toString()
+
         with(_uiState.value) {
             contatoDao.insere(
                 Contato(
@@ -109,7 +119,8 @@ class FormularioContatoViewModel @Inject constructor(
                     sobrenome = sobrenome,
                     telefone = telefone,
                     fotoPerfil = fotoPerfil,
-                    aniversario = aniversario
+                    aniversario = aniversario,
+                    nomeUsuario = usuarioLogadoAtualmente
                 )
             )
         }

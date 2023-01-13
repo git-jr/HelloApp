@@ -1,23 +1,31 @@
 package br.com.alura.helloapp.ui.userDialog
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.alura.helloapp.util.ID_USUARIO_ATUAL
+import br.com.alura.helloapp.data.Usuario
+import br.com.alura.helloapp.database.UsuarioDao
+import br.com.alura.helloapp.preferences.PreferencesKey
+import br.com.alura.helloapp.util.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ListaUsuariosViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    //private val usuarioDao: UsuarioDao,
+    private val usuarioDao: UsuarioDao,
+    private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    private val idUsuarioAtual = savedStateHandle.get<Long>(ID_USUARIO_ATUAL)
+    private val usuarioAtual = savedStateHandle.get<String>(USUARIO_ATUAL)
 
     private val _uiState = MutableStateFlow(ListaUsuariosUiState())
     val uiState: StateFlow<ListaUsuariosUiState>
@@ -30,16 +38,30 @@ class ListaUsuariosViewModel @Inject constructor(
     }
 
     private suspend fun carregaDados() {
-//        val usuarioAtual = idUsuarioAtual?.let { usuarioDao.buscaPorId(it).first() }
-//
-//        usuarioAtual?.let {
-//            usuarioDao.buscaTodos().collect { usuarios ->
-//                usuarios?.let {
-//                    _uiState.value = _uiState.value.copy(
-//                        outrosUsuarios = usuarios.minusElement(usuarioAtual)
-//                    )
-//                }
-//            }
-//        }
+        val usuario = usuarioAtual?.let { usuarioDao.buscaPorNomeDeUsuario(it).first() }
+
+        usuario?.let {
+            _uiState.value = _uiState.value.copy(
+                nome = usuario.nome,
+                nomeDeUsuario = usuario.nomeDeUsuario
+            )
+        }
+
+        usuarioAtual?.let {
+            usuarioDao.buscaTodos().collect { usuariosBuscados ->
+                usuariosBuscados?.let {
+                    it.remove(usuario)
+                    _uiState.value = _uiState.value.copy(
+                        outrosUsuarios = it
+                    )
+                }
+            }
+        }
+    }
+
+    suspend fun alteraUsuarioAtual(novoUsuarioAtual: String) {
+        dataStore.edit {
+            it[PreferencesKey.USUARIO_ATUAL] = novoUsuarioAtual
+        }
     }
 }

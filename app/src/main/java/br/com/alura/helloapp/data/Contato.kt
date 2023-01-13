@@ -15,5 +15,5 @@ data class Contato(
     val fotoPerfil: String = "",
     val aniversario: Date? = null,
     @ColumnInfo(defaultValue = "0")
-    val idUsuario: Long = 0L,
+    val nomeUsuario: String = "",
 )

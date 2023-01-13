@@ -56,6 +56,6 @@ fun NavHostController.navegaParaLoginDeslogado() {
     navegaDireto(DestinosHelloApp.LoginGraph.rota)
 }
 
-fun NavHostController.navegaParaDialgoUsuarios(idUsuarioAtual: Long = 0L) {
+fun NavHostController.navegaParaDialgoUsuarios(idUsuarioAtual: String = "") {
     navigate("${ListaUsuarios.rota}/$idUsuarioAtual")
 }

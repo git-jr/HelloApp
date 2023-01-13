@@ -66,9 +66,14 @@ fun NavGraphBuilder.loginGraph(
                     coroutineScope.launch {
                         viewModel.salvarLogin()
                     }
-                    navController.navegaLimpo(DestinosHelloApp.Login.rota)
                 }
             )
+
+            LaunchedEffect(state.voltarParaLogin) {
+                if (state.voltarParaLogin) {
+                    navController.navegaLimpo(DestinosHelloApp.Login.rota)
+                }
+            }
         }
     }
 }

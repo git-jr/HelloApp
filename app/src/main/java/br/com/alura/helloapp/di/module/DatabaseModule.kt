@@ -7,6 +7,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.database.HelloAppDatabase
+import br.com.alura.helloapp.database.UsuarioDao
 import br.com.alura.helloapp.database.converters.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
@@ -35,4 +36,10 @@ class DatabaseModule {
     fun provideContatoDao(db: HelloAppDatabase): ContatoDao {
         return db.contatoDao()
     }
+
+    @Provides
+    fun provideUsuarioDao(db: HelloAppDatabase): UsuarioDao {
+        return db.usuarioDao()
+    }
+
 }
