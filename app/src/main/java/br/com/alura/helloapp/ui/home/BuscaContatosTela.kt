@@ -53,12 +53,6 @@ fun AppBarBuscaContatos(
     onClickVoltar: () -> Unit = {},
     valor: String
 ) {
-//    var valor by remember {
-//        mutableStateOf(TextFieldValue(valorBusca))
-//    }
-
-//    var valor2 by remember { mutableStateOf("") }
-
     Column(
         modifier = Modifier
             .height(56.dp)

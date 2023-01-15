@@ -48,17 +48,26 @@ class BuscaContatosViewModel @Inject constructor(
 
     fun buscaContatosPorValor() {
 
-        viewModelScope.launch {
-            val contatos =
-                contatoDao.buscaPorUsuarioEValor(
-                    _uiState.value.usuarioAtual,
-                    _uiState.value.valorBusca
+        with(_uiState) {
+            if (value.valorBusca.isBlank()) {
+                value = value.copy(
+                    contatos = emptyList()
                 )
-            contatos.collect { contatosBuscados ->
-                contatosBuscados?.let {
-                    _uiState.value = _uiState.value.copy(
-                        contatos = contatosBuscados
+                return
+            }
+
+            viewModelScope.launch {
+                val contatos =
+                    contatoDao.buscaPorUsuarioEValor(
+                        value.usuarioAtual,
+                        value.valorBusca
                     )
+                contatos.collect { contatosBuscados ->
+                    contatosBuscados?.let {
+                        value = value.copy(
+                            contatos = contatosBuscados
+                        )
+                    }
                 }
             }
         }
