@@ -143,12 +143,12 @@ fun CaixaDialogoContasUsuario(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.ic_action_filter_list),
-                                    contentDescription = "Filtro",
+                                    painter = painterResource(id = R.drawable.ic_action_manage_accounts),
+                                    contentDescription = "Pessoa com símbolo de configuração",
                                     modifier = Modifier.weight(1F)
                                 )
                                 Text(
-                                    text = "Mostrar todos os contatos",
+                                    text = "Gerenciar Contas neste dispositivo",
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.weight(5F)

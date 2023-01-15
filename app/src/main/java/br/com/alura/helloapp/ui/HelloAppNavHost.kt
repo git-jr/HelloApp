@@ -27,6 +27,7 @@ fun HelloAppNavHost(
         formularioContatoGraph(navController)
         detalhesContatoGraph(navController)
         listaUsuarios(navController)
+        buscaContatosGraph(navController)
     }
 }
 

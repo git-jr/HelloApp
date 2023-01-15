@@ -28,9 +28,6 @@ fun NavGraphBuilder.homeGraph(
             val viewModel = hiltViewModel<ListaContatosViewModel>()
             val state by viewModel.uiState.collectAsState()
 
-            val dataStore = LocalContext.current.dataStore
-            val coroutineScope = rememberCoroutineScope()
-
             ListaContatosTela(
                 state = state,
                 onClickAbreDetalhes = { idContato ->
@@ -45,6 +42,9 @@ fun NavGraphBuilder.homeGraph(
 //                        viewModel.desloga()
 //                        navController.navegaParaLoginDeslogado()
 //                    }
+                },
+                onClickBuscaContatos = {
+                    navController.navigate(DestinosHelloApp.BuscaContatos.rota)
                 })
 
         }

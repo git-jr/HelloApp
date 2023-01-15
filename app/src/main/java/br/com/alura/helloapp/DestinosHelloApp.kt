@@ -12,6 +12,7 @@ sealed class DestinosHelloApp(val rota: String) {
     object ListaContatos : DestinosHelloApp("lista_contatos")
     object FormularioLogin : DestinosHelloApp("formulario_login")
     object Login : DestinosHelloApp("login")
+    object BuscaContatos : DestinosHelloApp("busca_contatos")
 }
 
 object FormularioContato {
