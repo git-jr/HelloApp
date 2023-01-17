@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FormularioLoginViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
     private val usuarioDao: UsuarioDao
 ) : ViewModel() {
 
@@ -68,18 +67,11 @@ class FormularioLoginViewModel @Inject constructor(
                 )
             )
             if (insere == -1L) { // Garaças a @Insert(onConflict = IGNORE), -1 é "já existe"
-                Log.i("salvarLogin", "Contato já existe")
+                Log.i("salvarLogin", "Usuário já existe")
                 _uiState.value.onErro(true)
             } else {
                 _uiState.value.voltarParaLoginMudou(true)
             }
         }
-
-//        dataStore.edit { preferences ->
-//            preferences[PreferencesKey.USUARIO] =
-//                _uiState.value.usuario
-//            preferences[PreferencesKey.SENHA] =
-//                _uiState.value.senha
-//        }
     }
 }

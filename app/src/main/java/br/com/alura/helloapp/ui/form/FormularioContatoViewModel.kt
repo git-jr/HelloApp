@@ -26,7 +26,6 @@ class FormularioContatoViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val idContato = savedStateHandle.get<Long>(ID_CONTATO)
-    //private val usuarioAtual = savedStateHandle.get<String>(USUARIO_ATUAL)
 
     private val _uiState = MutableStateFlow(FormularioContatoUiState())
     val uiState: StateFlow<FormularioContatoUiState>

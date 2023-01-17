@@ -5,10 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -34,13 +32,13 @@ import br.com.alura.helloapp.sampleData.usuariosExemplo
 import br.com.alura.helloapp.ui.components.AsyncImagePerfil
 import br.com.alura.helloapp.ui.theme.HelloAppTheme
 
-
 @Composable
 fun CaixaDialogoContasUsuario(
     state: ListaUsuariosUiState,
     onClickDispensar: () -> Unit = {},
     onClickAdicionarNovaConta: () -> Unit = {},
     onClickListarContatosPorUsuario: (String) -> Unit = {},
+    onClickGerenciarUsuarios: () -> Unit = {},
 ) {
     Dialog(
         onDismissRequest = onClickDispensar,
@@ -132,33 +130,36 @@ fun CaixaDialogoContasUsuario(
                     item {
                         Column(
                             Modifier
-                                .padding(vertical = 16.dp)
+                                .padding(vertical = 24.dp)
                                 .fillMaxWidth()
                         ) {
                             Row(
                                 Modifier
-                                    .padding(vertical = 8.dp)
                                     .heightIn(min = 32.dp)
-                                    .clickable {},
+                                    .fillMaxWidth()
+                                    .clickable { onClickGerenciarUsuarios() },
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_action_manage_accounts),
                                     contentDescription = "Pessoa com símbolo de configuração",
-                                    modifier = Modifier.weight(1F)
                                 )
+
+                                Spacer(modifier = Modifier.size(8.dp))
+
                                 Text(
-                                    text = "Gerenciar Contas neste dispositivo",
+                                    text = "Gerenciar contas",
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.weight(5F)
                                 )
                             }
 
+                            Spacer(modifier = Modifier.size(16.dp))
+
                             Row(
                                 Modifier
-                                    .padding(vertical = 8.dp)
                                     .heightIn(min = 32.dp)
+                                    .fillMaxWidth()
                                     .clickable {
                                         onClickAdicionarNovaConta()
                                     },
@@ -167,13 +168,14 @@ fun CaixaDialogoContasUsuario(
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_action_person_add),
                                     contentDescription = "Adicionar",
-                                    modifier = Modifier.weight(1F)
                                 )
+
+                                Spacer(modifier = Modifier.size(8.dp))
+
                                 Text(
                                     text = "Adicionar nova conta",
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.weight(5F)
                                 )
                             }
                         }

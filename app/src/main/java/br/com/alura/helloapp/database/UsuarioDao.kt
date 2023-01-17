@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.*
 import androidx.room.Query
+import androidx.room.Update
 import br.com.alura.helloapp.data.Usuario
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +19,7 @@ interface UsuarioDao {
 
     @Query("SELECT * FROM Usuario WHERE nomeDeUsuario = :nomeDeUsuario")
     fun buscaPorNomeDeUsuario(nomeDeUsuario: String): Flow<Usuario?>
+
+    @Update
+    suspend fun atualizar(usuario: Usuario)
 }

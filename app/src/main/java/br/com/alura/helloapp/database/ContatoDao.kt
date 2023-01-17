@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import br.com.alura.helloapp.data.Contato
+import br.com.alura.helloapp.data.Usuario
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -25,8 +26,11 @@ interface ContatoDao {
     @Query("SELECT * FROM Contato WHERE nomeUsuario = :usuarioAtual AND id = :idContato")
     fun buscaPorIdEUsuario(idContato: Long, usuarioAtual: String): Flow<Contato?>
 
-    @Query("SELECT * FROM Contato WHERE nomeUsuario = :usuarioAtual AND (nome LIKE :valor || '%' or sobrenome LIKE :valor || '%') ")
+    @Query("SELECT * FROM Contato WHERE nomeUsuario = :usuarioAtual AND (nome LIKE :valor or sobrenome LIKE :valor || '%') ")
     fun buscaPorUsuarioEValor(usuarioAtual: String, valor: String): Flow<List<Contato>?>
+
+//    @Query("SELECT * FROM Contato JOIN Usuario on Contato.nomeUsuario = Usuario.nomeDeUsuario and Contato.nomeUsuario = 'sandra'")
+//    fun buscaPorIdEUsuarioMap(usuarioAtual: String, valor: String): Flow<Map<Usuario, List<Contato>?>>
 
     @Query("DELETE FROM Contato WHERE id = :id")
     suspend fun deleta(id: Long)

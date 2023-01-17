@@ -13,6 +13,9 @@ sealed class DestinosHelloApp(val rota: String) {
     object FormularioLogin : DestinosHelloApp("formulario_login")
     object Login : DestinosHelloApp("login")
     object BuscaContatos : DestinosHelloApp("busca_contatos")
+    object GerenciaUsuarios : DestinosHelloApp("gerencia_usuarios")
+
+
 }
 
 object FormularioContato {
@@ -48,3 +51,13 @@ object ListaUsuarios {
     )
 }
 
+object FormularioUsuario {
+    const val rota = "formulario_usuario"
+    const val rotaComArgumentos = "$rota/{$USUARIO_ATUAL}"
+    val argumentos = listOf(
+        navArgument(USUARIO_ATUAL) {
+            defaultValue = ""
+            type = NavType.StringType
+        }
+    )
+}
