@@ -3,20 +3,25 @@ package br.com.alura.helloapp.navigation
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.datastore.dataStore
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import br.com.alura.helloapp.DestinosHelloApp
 import br.com.alura.helloapp.FormularioUsuario
 import br.com.alura.helloapp.ListaUsuarios
+import br.com.alura.helloapp.ui.navegaLimpo
+import br.com.alura.helloapp.ui.navegaParaFormularioUsuario
+import br.com.alura.helloapp.ui.navegaParaLoginDeslogado
 import br.com.alura.helloapp.ui.userDialog.*
 import br.com.alura.helloapp.util.USUARIO_ATUAL
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.listaUsuarios(
-    navController: NavController
+    navController: NavHostController
 ) {
     dialog(
         route = ListaUsuarios.rotaComArgumentos,
@@ -42,9 +47,7 @@ fun NavGraphBuilder.listaUsuarios(
                 onClickListarContatosPorUsuario = { novoUsuario ->
                     coroutineScope.launch {
                         viewModel.alteraUsuarioAtual(novoUsuario)
-                        navController.navigate(DestinosHelloApp.HomeGraph.rota) {
-                            popUpTo(0)
-                        }
+                        navController.navegaLimpo(DestinosHelloApp.HomeGraph.rota)
                     }
                 },
                 onClickGerenciarUsuarios = {
@@ -62,7 +65,7 @@ fun NavGraphBuilder.listaUsuarios(
 
         GerenciaUsuariosTela(state = state,
             onClickAbreDetalhes = { usuarioAtual ->
-                navController.navigate("${FormularioUsuario.rota}/$usuarioAtual")
+                navController.navegaParaFormularioUsuario(usuarioAtual)
             },
             onClickVoltar = {
                 navController.popBackStack()
@@ -87,8 +90,17 @@ fun NavGraphBuilder.listaUsuarios(
                     viewModel.atualizar()
                     navController.popBackStack()
                 }
-
             },
+            onClickApagar = {
+                coroutineScope.launch {
+                    viewModel.apaga()
+                    if (state.contaUsuarioLogadoFoiApagada) {
+                        navController.navegaParaLoginDeslogado()
+                    } else {
+                        navController.popBackStack()
+                    }
+                }
+            }
         )
 
     }

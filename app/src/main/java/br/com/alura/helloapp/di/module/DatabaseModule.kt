@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.database.HelloAppDatabase
 import br.com.alura.helloapp.database.UsuarioDao
+import br.com.alura.helloapp.database.converters.MIGRATION_11_12
 import br.com.alura.helloapp.database.converters.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
@@ -27,7 +28,7 @@ class DatabaseModule {
             context,
             HelloAppDatabase::class.java,
             "helloApp.db"
-        ).addMigrations(MIGRATION_1_2)
+        ).addMigrations(MIGRATION_1_2, MIGRATION_11_12)
             .fallbackToDestructiveMigration()
             .build()
     }

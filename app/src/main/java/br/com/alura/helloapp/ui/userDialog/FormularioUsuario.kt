@@ -14,11 +14,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alura.helloapp.R
-import br.com.alura.helloapp.ui.form.FormularioContatoAppBar
+import br.com.alura.helloapp.ui.components.CaixaDialogoConfirmacao
 import br.com.alura.helloapp.ui.theme.HelloAppTheme
 
 @Composable
@@ -27,13 +26,13 @@ fun FormularioUsuarioTela(
     modifier: Modifier = Modifier,
     onClickVoltar: () -> Unit = {},
     onClickSalvar: () -> Unit = {},
+    onClickApagar: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
             FormularioUsuarioAppBar(onClickVoltar = onClickVoltar)
         },
-
-        ) { paddingValues ->
+    ) { paddingValues ->
 
         Column(
             modifier
@@ -41,8 +40,7 @@ fun FormularioUsuarioTela(
                 .fillMaxSize()
         ) {
             Column(
-                Modifier
-                    .padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+                Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 val focuAtual = LocalFocusManager.current
 
@@ -98,27 +96,52 @@ fun FormularioUsuarioTela(
                 ) {
                     Text(text = stringResource(R.string.salvar))
                 }
+
+                Spacer(Modifier.height(8.dp))
+
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(56.dp),
+                    onClick = {
+                        state.mostraMensagemExclusaoMudou(true)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Red
+                    )
+                ) {
+                    Text(
+                        text = stringResource(R.string.excluir_usuario),
+                        color = Color.White
+                    )
+                }
             }
         }
+    }
+
+    if (state.mostraMensagemExclusao) {
+        CaixaDialogoConfirmacao(
+            titulo = stringResource(R.string.tem_certeza),
+            mensagem = stringResource(R.string.aviso_apagar_usuario),
+            onClikConfirma = onClickApagar,
+            onClickCancela = { state.mostraMensagemExclusaoMudou(false) },
+        )
     }
 }
 
 @Composable
 fun FormularioUsuarioAppBar(onClickVoltar: () -> Unit = {}) {
-    TopAppBar(
-        title = { Text(text = stringResource(R.string.editar_usuario)) },
-        navigationIcon = {
-            IconButton(
-                onClick = onClickVoltar
-            ) {
-                Icon(
-                    Icons.Default.ArrowBack,
-                    tint = Color.White,
-                    contentDescription = stringResource(R.string.voltar)
-                )
-            }
+    TopAppBar(title = { Text(text = stringResource(R.string.editar_usuario)) }, navigationIcon = {
+        IconButton(
+            onClick = onClickVoltar
+        ) {
+            Icon(
+                Icons.Default.ArrowBack,
+                tint = Color.White,
+                contentDescription = stringResource(R.string.voltar)
+            )
         }
-    )
+    })
 }
 
 @Preview

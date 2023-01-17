@@ -31,4 +31,8 @@
     <string name="usuario_ja_existe">Nome de usuário já existe, escolha outro</string>
     <string name="pesquisar_contatos">Buscar contatos</string>
     <string name="editar_usuario">Editar usuário</string>
+    <string name="excluir_usuario">Excluir usuário</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="tem_certeza">Tem certeza?</string>
+    <string name="aviso_apagar_usuario">Ao apagar uma conta de usuário todos os contatos associdados a ele serão perdidos</string>
 </resources>

@@ -13,7 +13,7 @@ import br.com.alura.helloapp.database.converters.Converters
 
 @Database(
     entities = [Contato::class, Usuario::class],
-    version = 9,
+    version = 12,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
@@ -28,6 +28,8 @@ import br.com.alura.helloapp.database.converters.Converters
         AutoMigration(from = 5, to = 6),
         AutoMigration(from = 6, to = 7, spec = HelloAppDatabase.Migration6To7::class),
         AutoMigration(from = 7, to = 8, spec = HelloAppDatabase.Migration7To8::class),
+        AutoMigration(from = 9, to = 10),
+        AutoMigration(from = 10, to = 11)
 
 
     ]

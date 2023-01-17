@@ -2,10 +2,20 @@ package br.com.alura.helloapp.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity
+@Entity(
+    foreignKeys = [ForeignKey(
+        entity = Usuario::class,
+        parentColumns = ["nomeDeUsuario"],
+        childColumns = ["nomeUsuario"],
+        onDelete = CASCADE,
+        onUpdate = CASCADE
+    )]
+)
 data class Contato(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
