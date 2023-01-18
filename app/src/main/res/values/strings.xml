@@ -35,4 +35,9 @@
     <string name="confirmar">Confirmar</string>
     <string name="tem_certeza">Tem certeza?</string>
     <string name="aviso_apagar_usuario">Ao apagar uma conta de usuário todos os contatos associdados a ele serão perdidos</string>
+    <string name="gerenciar_contas">Gerenciar contas</string>
+    <string name="adicionar_nova_conta">Adicionar nova conta</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="descricao_icone_pessoa_configuracao">Pessoa com símbolo de configuração</string>
+    <string name="fechar">Fechar</string>
 </resources>

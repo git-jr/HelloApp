@@ -47,7 +47,6 @@ fun CaixaDialogoContasUsuario(
                 Modifier
                     .clip(RoundedCornerShape(5))
                     .heightIn(300.dp)
-                    .widthIn(200.dp)
                     .background(Color.White),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -71,7 +70,7 @@ fun CaixaDialogoContasUsuario(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Icon(imageVector = Icons.Default.Close,
-                                    contentDescription = "Fechar",
+                                    contentDescription = stringResource(R.string.fechar),
                                     tint = Color.Gray,
                                     modifier = Modifier.clickable { onClickDispensar() })
                             }
@@ -120,71 +119,82 @@ fun CaixaDialogoContasUsuario(
 
                 Divider(thickness = 1.dp)
 
-                LazyColumn(Modifier.padding(horizontal = 16.dp)) {
+                LazyColumn(
+                    Modifier
+                        .height(150.dp)
+                        .padding(horizontal = 16.dp)
+                ) {
                     items(state.outrosUsuarios) { usuario ->
                         UsuarioItem(usuario) { nomeUsuario ->
                             onClickListarContatosPorUsuario(nomeUsuario)
                         }
                     }
-
                     item {
-                        Column(
-                            Modifier
-                                .padding(vertical = 24.dp)
-                                .fillMaxWidth()
-                        ) {
-                            Row(
-                                Modifier
-                                    .heightIn(min = 32.dp)
-                                    .fillMaxWidth()
-                                    .clickable { onClickGerenciarUsuarios() },
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_action_manage_accounts),
-                                    contentDescription = "Pessoa com símbolo de configuração",
-                                )
-
-                                Spacer(modifier = Modifier.size(8.dp))
-
-                                Text(
-                                    text = "Gerenciar contas",
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.size(16.dp))
-
-                            Row(
-                                Modifier
-                                    .heightIn(min = 32.dp)
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        onClickAdicionarNovaConta()
-                                    },
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_action_person_add),
-                                    contentDescription = "Adicionar",
-                                )
-
-                                Spacer(modifier = Modifier.size(8.dp))
-
-                                Text(
-                                    text = "Adicionar nova conta",
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                )
-                            }
-                        }
+                        ItemsAcaoEmConta(onClickGerenciarUsuarios, onClickAdicionarNovaConta)
                     }
                 }
 
             }
-        },
+        }
     )
+}
+
+@Composable
+private fun ItemsAcaoEmConta(
+    onClickGerenciarUsuarios: () -> Unit,
+    onClickAdicionarNovaConta: () -> Unit
+) {
+    Column(
+        Modifier
+            .padding(vertical = 24.dp)
+            .fillMaxWidth()
+    ) {
+        Row(
+            Modifier
+                .height(42.dp)
+                .fillMaxWidth()
+                .clickable { onClickGerenciarUsuarios() },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_action_manage_accounts),
+                contentDescription = stringResource(R.string.descricao_icone_pessoa_configuracao),
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            Text(
+                text = stringResource(R.string.gerenciar_contas),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Row(
+            Modifier
+                .height(42.dp)
+                .fillMaxWidth()
+                .clickable {
+                    onClickAdicionarNovaConta()
+                },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_action_person_add),
+                contentDescription = stringResource(R.string.adicionar),
+            )
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            Text(
+                text = stringResource(R.string.adicionar_nova_conta),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+    }
 }
 
 @Composable
