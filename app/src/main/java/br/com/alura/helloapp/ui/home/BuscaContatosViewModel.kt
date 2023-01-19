@@ -7,39 +7,39 @@ import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.preferences.PreferencesKey
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BuscaContatosViewModel @Inject constructor(
-    private val contatoDao: ContatoDao,
-    private val dataStore: DataStore<Preferences>
+    private val contatoDao: ContatoDao, private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(BuscaContatosUiState())
+    private val _uiState = MutableStateFlow(
+        BuscaContatosUiState()
+    )
     val uiState: StateFlow<BuscaContatosUiState>
         get() = _uiState.asStateFlow()
 
     init {
         _uiState.update { state ->
-            state.copy(
-                onValorBuscaMudou = {
-                    _uiState.value = _uiState.value.copy(
-                        valorBusca = it
-                    )
-                    buscaContatosPorValor()
-                }
-            )
+            state.copy(onValorBuscaMudou = {
+                _uiState.value = _uiState.value.copy(
+                    valorBusca = it
+                )
+                buscaContatosPorValor()
+            })
         }
 
         viewModelScope.launch {
             dataStore.data.collect {
+                val usuarioAtual = it[PreferencesKey.USUARIO_ATUAL].toString()
+                val listaDeContatos = contatoDao.buscaTodosPorUsuario(usuarioAtual).first()
+
                 _uiState.value = _uiState.value.copy(
-                    usuarioAtual = it[PreferencesKey.USUARIO_ATUAL].toString()
+                    usuarioAtual = usuarioAtual,
+                    contatos = listaDeContatos
                 )
             }
         }
@@ -49,19 +49,11 @@ class BuscaContatosViewModel @Inject constructor(
     fun buscaContatosPorValor() {
 
         with(_uiState) {
-            if (value.valorBusca.isBlank()) {
-                value = value.copy(
-                    contatos = emptyList()
-                )
-                return
-            }
-
             viewModelScope.launch {
-                val contatos =
-                    contatoDao.buscaPorUsuarioEValor(
-                        value.usuarioAtual,
-                        value.valorBusca
-                    )
+                val contatos = contatoDao.buscaPorUsuarioEValor(
+                    value.usuarioAtual.toString(),
+                    value.valorBusca
+                )
                 contatos.collect { contatosBuscados ->
                     contatosBuscados?.let {
                         value = value.copy(

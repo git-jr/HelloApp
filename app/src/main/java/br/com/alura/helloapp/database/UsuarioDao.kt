@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UsuarioDao {
 
-    @Insert(onConflict = IGNORE)
+    @Insert
     suspend fun insere(usuario: Usuario): Long
 
     @Query("SELECT * FROM Usuario")
     fun buscaTodos(): Flow<MutableList<Usuario>?>
 
-    @Query("SELECT * FROM Usuario WHERE nomeDeUsuario = :nomeDeUsuario")
+    @Query("SELECT * FROM Usuario WHERE id = :nomeDeUsuario")
     fun buscaPorNomeDeUsuario(nomeDeUsuario: String): Flow<Usuario?>
 
     @Update

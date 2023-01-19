@@ -23,7 +23,7 @@ fun HelloAppNavHost(
         homeGraph(navController)
         formularioContatoGraph(navController)
         detalhesContatoGraph(navController)
-        listaUsuarios(navController)
+        usuariosGraph(navController)
         buscaContatosGraph(navController)
     }
 }
@@ -54,10 +54,10 @@ fun NavHostController.navegaParaLoginDeslogado() {
     navegaDireto(DestinosHelloApp.LoginGraph.rota)
 }
 
-fun NavHostController.navegaParaDialgoUsuarios(idUsuarioAtual: String = "") {
+fun NavHostController.navegaParaDialgoUsuarios(idUsuarioAtual: String) {
     navigate("${ListaUsuarios.rota}/$idUsuarioAtual")
 }
 
-fun NavHostController.navegaParaFormularioUsuario(idUsuarioAtual: String = "") {
+fun NavHostController.navegaParaFormularioUsuario(idUsuarioAtual: String) {
     navigate("${FormularioUsuario.rota}/$idUsuarioAtual")
 }

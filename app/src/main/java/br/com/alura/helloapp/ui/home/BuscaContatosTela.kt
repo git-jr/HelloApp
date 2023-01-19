@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alura.helloapp.R
 import br.com.alura.helloapp.sampleData.contatosExemplo
+import br.com.alura.helloapp.sampleData.usuariosExemplo
 import br.com.alura.helloapp.ui.theme.HelloAppTheme
 
 @Composable
@@ -28,6 +29,7 @@ fun BuscaContatosTela(
     onClickVoltar: () -> Unit = {}
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             AppBarBuscaContatos(
                 onValorMudou = state.onValorBuscaMudou,
@@ -37,7 +39,7 @@ fun BuscaContatosTela(
         },
     ) { paddingValues ->
 
-        LazyColumn(modifier.padding(paddingValues)) {
+        LazyColumn(Modifier.padding(paddingValues)) {
             items(state.contatos) { contato ->
                 ContatoItem(contato) { idContato ->
                     onClickAbreDetalhes(idContato)
@@ -49,9 +51,9 @@ fun BuscaContatosTela(
 
 @Composable
 fun AppBarBuscaContatos(
+    valor: String,
     onValorMudou: (String) -> Unit = {},
-    onClickVoltar: () -> Unit = {},
-    valor: String
+    onClickVoltar: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -99,7 +101,7 @@ fun AppBarBuscaContatos(
 @Composable
 fun AppBarBuscaContatosPreview() {
     HelloAppTheme {
-        //AppBarBuscaContatos()
+        AppBarBuscaContatos("")
     }
 }
 
@@ -108,7 +110,10 @@ fun AppBarBuscaContatosPreview() {
 fun BuscaContatosPreview() {
     HelloAppTheme {
         BuscaContatosTela(
-            state = BuscaContatosUiState(contatosExemplo)
+            state = BuscaContatosUiState(
+                contatos = contatosExemplo,
+                usuarioAtual = usuariosExemplo.first().nomeDeUsuario
+            )
         )
     }
 }

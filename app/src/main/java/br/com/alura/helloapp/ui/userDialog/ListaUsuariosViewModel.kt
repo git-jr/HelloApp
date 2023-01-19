@@ -6,15 +6,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.alura.helloapp.data.Usuario
 import br.com.alura.helloapp.database.UsuarioDao
 import br.com.alura.helloapp.preferences.PreferencesKey
 import br.com.alura.helloapp.util.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,14 +44,13 @@ class ListaUsuariosViewModel @Inject constructor(
         }
 
         usuarioAtual?.let {
-            usuarioDao.buscaTodos().collect { usuariosBuscados ->
-                usuariosBuscados?.let {
-                    it.remove(usuario)
+            usuarioDao.buscaTodos()
+                .filterNotNull().collect { usuariosBuscados ->
+                    usuariosBuscados.remove(usuario)
                     _uiState.value = _uiState.value.copy(
-                        outrosUsuarios = it
+                        outrosUsuarios = usuariosBuscados
                     )
                 }
-            }
         }
     }
 

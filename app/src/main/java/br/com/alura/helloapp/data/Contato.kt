@@ -10,8 +10,8 @@ import java.util.*
 @Entity(
     foreignKeys = [ForeignKey(
         entity = Usuario::class,
-        parentColumns = ["nomeDeUsuario"],
-        childColumns = ["nomeUsuario"],
+        parentColumns = ["id"],
+        childColumns = ["id_usuario"],
         onDelete = CASCADE,
         onUpdate = CASCADE
     )]
@@ -24,6 +24,6 @@ data class Contato(
     val telefone: String = "",
     val fotoPerfil: String = "",
     val aniversario: Date? = null,
-    @ColumnInfo(defaultValue = "0")
+    @ColumnInfo(defaultValue = "0", name = "id_usuario")
     val nomeUsuario: String = "",
 )

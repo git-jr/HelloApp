@@ -4,7 +4,7 @@ import br.com.alura.helloapp.data.Contato
 
 data class BuscaContatosUiState(
     val contatos: List<Contato> = emptyList(),
-    val usuarioAtual: String = "",
+    val usuarioAtual: String? = null,
     val valorBusca: String = "",
     val onValorBuscaMudou: (String) -> Unit = {}
 )

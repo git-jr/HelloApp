@@ -8,6 +8,7 @@ import br.com.alura.helloapp.util.USUARIO_ATUAL
 sealed class DestinosHelloApp(val rota: String) {
     object LoginGraph : DestinosHelloApp("grafico_login")
     object HomeGraph : DestinosHelloApp("grafico_home")
+    object UsuariosGraph : DestinosHelloApp("grafico_usuarios")
     object SplashScreen : DestinosHelloApp("splashScreen")
     object ListaContatos : DestinosHelloApp("lista_contatos")
     object FormularioLogin : DestinosHelloApp("formulario_login")
@@ -45,7 +46,6 @@ object ListaUsuarios {
     const val rotaComArgumentos = "$rota/{$USUARIO_ATUAL}"
     val argumentos = listOf(
         navArgument(USUARIO_ATUAL) {
-            defaultValue = ""
             type = NavType.StringType
         }
     )
@@ -56,7 +56,6 @@ object FormularioUsuario {
     const val rotaComArgumentos = "$rota/{$USUARIO_ATUAL}"
     val argumentos = listOf(
         navArgument(USUARIO_ATUAL) {
-            defaultValue = ""
             type = NavType.StringType
         }
     )

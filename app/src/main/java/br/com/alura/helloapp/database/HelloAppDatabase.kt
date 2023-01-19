@@ -13,7 +13,7 @@ import br.com.alura.helloapp.database.converters.Converters
 
 @Database(
     entities = [Contato::class, Usuario::class],
-    version = 12,
+    version = 13,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
@@ -29,7 +29,8 @@ import br.com.alura.helloapp.database.converters.Converters
         AutoMigration(from = 6, to = 7, spec = HelloAppDatabase.Migration6To7::class),
         AutoMigration(from = 7, to = 8, spec = HelloAppDatabase.Migration7To8::class),
         AutoMigration(from = 9, to = 10),
-        AutoMigration(from = 10, to = 11)
+        AutoMigration(from = 10, to = 11),
+        AutoMigration(from = 12, to = 13,spec = HelloAppDatabase.Migration12To13::class),
 
 
     ]
@@ -50,4 +51,8 @@ abstract class HelloAppDatabase : RoomDatabase() {
 
     @RenameColumn(tableName = "Contato", fromColumnName = "idUsuario", toColumnName = "nomeUsuario")
     class Migration7To8 : AutoMigrationSpec
+
+    @RenameColumn(tableName = "Contato", fromColumnName = "nomeUsuario", toColumnName = "id_usuario")
+    @RenameColumn(tableName = "Usuario", fromColumnName = "nomeDeUsuario", toColumnName = "id")
+    class Migration12To13 : AutoMigrationSpec
 }

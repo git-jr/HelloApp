@@ -2,7 +2,6 @@ package br.com.alura.helloapp.ui.userDialog
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -67,7 +66,7 @@ class FormularioUsuarioViewModel @Inject constructor(
         }
     }
 
-    suspend fun atualizar() {
+    suspend fun atualiza() {
         with(_uiState.value) {
             usuarioDao.atualizar(
                 Usuario(

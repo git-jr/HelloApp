@@ -34,19 +34,20 @@ import br.com.alura.helloapp.ui.theme.HelloAppTheme
 
 @Composable
 fun CaixaDialogoContasUsuario(
+    modifier: Modifier = Modifier,
     state: ListaUsuariosUiState,
     onClickDispensar: () -> Unit = {},
     onClickAdicionarNovaConta: () -> Unit = {},
     onClickListarContatosPorUsuario: (String) -> Unit = {},
-    onClickGerenciarUsuarios: () -> Unit = {},
+    onClickGerenciarUsuarios: () -> Unit = {}
 ) {
     Dialog(
         onDismissRequest = onClickDispensar,
         content = {
             Column(
-                Modifier
+                modifier
                     .clip(RoundedCornerShape(5))
-                    .heightIn(300.dp)
+                    .height(300.dp)
                     .background(Color.White),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -121,7 +122,7 @@ fun CaixaDialogoContasUsuario(
 
                 LazyColumn(
                     Modifier
-                        .height(150.dp)
+                        .height(200.dp)
                         .padding(horizontal = 16.dp)
                 ) {
                     items(state.outrosUsuarios) { usuario ->
@@ -130,7 +131,10 @@ fun CaixaDialogoContasUsuario(
                         }
                     }
                     item {
-                        ItemsAcaoEmConta(onClickGerenciarUsuarios, onClickAdicionarNovaConta)
+                        ItemsAcaoEmConta(
+                            onClickGerenciarUsuarios = onClickGerenciarUsuarios,
+                            onClickAdicionarNovaConta = onClickAdicionarNovaConta
+                        )
                     }
                 }
 
@@ -141,11 +145,12 @@ fun CaixaDialogoContasUsuario(
 
 @Composable
 private fun ItemsAcaoEmConta(
+    modifier: Modifier = Modifier,
     onClickGerenciarUsuarios: () -> Unit,
     onClickAdicionarNovaConta: () -> Unit
 ) {
     Column(
-        Modifier
+        modifier
             .padding(vertical = 24.dp)
             .fillMaxWidth()
     ) {
@@ -242,15 +247,13 @@ fun UsuarioItemPreview() {
 @Preview
 @Composable
 fun CaixaDialogoContasUsuarioPreview() {
-
     HelloAppTheme {
         CaixaDialogoContasUsuario(
-            ListaUsuariosUiState(
+            state = ListaUsuariosUiState(
                 nome = "Quem está logado agora",
                 nomeDeUsuario = "@user_atual",
                 outrosUsuarios = listOf(usuariosExemplo.first())
             )
         )
     }
-
 }

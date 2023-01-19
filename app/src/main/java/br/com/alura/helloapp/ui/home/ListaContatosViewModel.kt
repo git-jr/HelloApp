@@ -2,14 +2,10 @@ package br.com.alura.helloapp.ui.home
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.preferences.PreferencesKey
-import br.com.alura.helloapp.preferences.PreferencesKey.USUARIO_ATUAL
-import br.com.alura.helloapp.util.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
