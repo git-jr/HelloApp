@@ -48,7 +48,6 @@ class LoginViewModel @Inject constructor(
     }
 
     suspend fun tentaLogar() {
-
         val usuarioBuscado = usuarioDao
             .buscaPorNomeDeUsuario(_uiState.value.usuario)
             .first()

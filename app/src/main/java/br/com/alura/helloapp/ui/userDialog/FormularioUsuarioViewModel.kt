@@ -10,6 +10,7 @@ import br.com.alura.helloapp.data.Usuario
 import br.com.alura.helloapp.database.UsuarioDao
 import br.com.alura.helloapp.preferences.PreferencesKey
 import br.com.alura.helloapp.preferences.PreferencesKey.LOGADO
+import br.com.alura.helloapp.preferences.PreferencesKey.USUARIO_ATUAL
 import br.com.alura.helloapp.util.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -24,7 +25,7 @@ class FormularioUsuarioViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    private val nomeUsuario = savedStateHandle.get<String>(USUARIO_ATUAL)
+    private val nomeUsuario = savedStateHandle.get<String>(br.com.alura.helloapp.util.USUARIO_ATUAL)
 
     private val _uiState = MutableStateFlow(FormularioUsuarioUiState())
     val uiState: StateFlow<FormularioUsuarioUiState>
@@ -78,7 +79,7 @@ class FormularioUsuarioViewModel @Inject constructor(
         }
     }
 
-    suspend fun apaga() {
+    suspend fun apagaUsuario() {
         with(_uiState.value) {
             usuarioDao.apaga(
                 Usuario(
@@ -89,7 +90,6 @@ class FormularioUsuarioViewModel @Inject constructor(
             )
             mostraMensagemExclusaoMudou(false)
         }
-
         verificaRotaDeVolta()
     }
 
@@ -97,16 +97,10 @@ class FormularioUsuarioViewModel @Inject constructor(
         val usarioLogado = dataStore.data.first()[PreferencesKey.USUARIO_ATUAL]
         val usuarioQueFoiApagado = _uiState.value.nomeUsuario
         if (usarioLogado == usuarioQueFoiApagado) {
-            _uiState.value = _uiState.value.copy(
-                contaUsuarioLogadoFoiApagada = true
-            )
+            dataStore.edit {
+                it.remove(PreferencesKey.USUARIO_ATUAL)
+            }
         }
-        desloga()
     }
 
-    suspend fun desloga() {
-        dataStore.edit { preferences ->
-            preferences[LOGADO] = false
-        }
-    }
 }

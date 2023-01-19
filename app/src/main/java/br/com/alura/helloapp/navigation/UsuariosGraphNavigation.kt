@@ -96,12 +96,8 @@ fun NavGraphBuilder.usuariosGraph(
                 },
                 onClickApagar = {
                     coroutineScope.launch {
-                        viewModel.apaga()
-                        if (state.contaUsuarioLogadoFoiApagada) {
-                            navController.navegaParaLoginDeslogado()
-                        } else {
-                            navController.popBackStack()
-                        }
+                        viewModel.apagaUsuario()
+                        navController.popBackStack()
                     }
                 }
             )

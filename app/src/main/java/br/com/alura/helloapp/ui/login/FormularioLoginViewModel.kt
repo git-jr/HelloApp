@@ -56,7 +56,7 @@ class FormularioLoginViewModel @Inject constructor(
     suspend fun salvarLogin() {
         with(_uiState.value) {
             try {
-                val insere = usuarioDao.insere(
+                usuarioDao.insere(
                     Usuario(
                         nomeDeUsuario = usuario,
                         nome = nome,
@@ -67,12 +67,6 @@ class FormularioLoginViewModel @Inject constructor(
             } catch (e: Exception) {
                 _uiState.value.onErro(true)
             }
-//            if (insere == -1L) { // Graças a @Insert(onConflict = IGNORE), -1 é "já existe"
-//                Log.i("salvarLogin", "Usuário já existe")
-//                _uiState.value.onErro(true)
-//            } else {
-//                _uiState.value.voltarParaLoginMudou(true)
-//            }
         }
     }
 }

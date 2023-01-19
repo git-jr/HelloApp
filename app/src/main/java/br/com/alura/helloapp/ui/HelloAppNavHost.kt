@@ -1,7 +1,10 @@
 package br.com.alura.helloapp.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -26,6 +29,14 @@ fun HelloAppNavHost(
         usuariosGraph(navController)
         buscaContatosGraph(navController)
     }
+
+    val viewModel = hiltViewModel<SessaoViewModel>()
+    val state = viewModel.uiState.collectAsState()
+
+    if (!state.value.logado) {
+        navController.navegaParaLoginDeslogado()
+    }
+
 }
 
 
