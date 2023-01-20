@@ -60,7 +60,7 @@ class FormularioUsuarioViewModel @Inject constructor(
             usuario.collect { usuarioBuscado ->
                 usuarioBuscado?.let {
                     _uiState.value = _uiState.value.copy(
-                        nomeUsuario = it.nomeDeUsuario, nome = it.nome, senha = it.senha
+                        nomeUsuario = it.nomeDeUsuario, nome = it.nome, senha = it.senha.toString()
                     )
                 }
             }

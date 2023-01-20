@@ -72,7 +72,7 @@ class FormularioContatoViewModel @Inject constructor(
 
     private suspend fun carregaContato() {
         idContato?.let {
-            val contato = contatoDao.buscaPorIdEUsuario(idContato, usuarioAtual = USUARIO_ATUAL)
+            val contato = contatoDao.buscaPorIdDoUsuario(idContato, usuarioAtual = USUARIO_ATUAL)
             contato.collect {
                 it?.let {
                     with(it) {

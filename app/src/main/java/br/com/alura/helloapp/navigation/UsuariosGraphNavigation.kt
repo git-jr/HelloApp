@@ -5,16 +5,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
 import br.com.alura.helloapp.DestinosHelloApp
 import br.com.alura.helloapp.FormularioUsuario
 import br.com.alura.helloapp.ListaUsuarios
-import br.com.alura.helloapp.ui.navegaLimpo
-import br.com.alura.helloapp.ui.navegaParaFormularioUsuario
-import br.com.alura.helloapp.ui.navegaParaLoginDeslogado
 import br.com.alura.helloapp.ui.userDialog.*
 import br.com.alura.helloapp.util.USUARIO_ATUAL
 import kotlinx.coroutines.launch

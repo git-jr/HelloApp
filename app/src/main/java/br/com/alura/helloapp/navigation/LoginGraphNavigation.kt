@@ -19,7 +19,8 @@ import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.loginGraph(
     onNavegaParaHome: () -> Unit,
-    onNavegaParaFormularioLogin: () -> Unit
+    onNavegaParaFormularioLogin: () -> Unit,
+    onNavegaParaLogin: () -> Unit,
 ) {
     navigation(
         startDestination = DestinosHelloApp.Login.rota, route = DestinosHelloApp.LoginGraph.rota
@@ -64,7 +65,7 @@ fun NavGraphBuilder.loginGraph(
 
             LaunchedEffect(state.voltarParaLogin) {
                 if (state.voltarParaLogin) {
-                    onNavegaParaFormularioLogin()
+                    onNavegaParaLogin()
                 }
             }
         }

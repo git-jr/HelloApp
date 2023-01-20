@@ -47,7 +47,6 @@ class BuscaContatosViewModel @Inject constructor(
     }
 
     fun buscaContatosPorValor() {
-
         with(_uiState) {
             viewModelScope.launch {
                 val contatos = contatoDao.buscaPorUsuarioEValor(

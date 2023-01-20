@@ -11,5 +11,5 @@ data class Usuario(
     val nomeDeUsuario: String = "",
     val nome: String = "",
     @ColumnInfo(defaultValue = "")
-    val senha: String = "",
+    val senha: String? = null,
 )
