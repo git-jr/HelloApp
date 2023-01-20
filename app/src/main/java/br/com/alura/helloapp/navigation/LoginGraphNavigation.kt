@@ -18,11 +18,11 @@ import br.com.alura.helloapp.ui.navegaLimpo
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.loginGraph(
-    navController: NavHostController
+    onNavegaParaHome: () -> Unit,
+    onNavegaParaFormularioLogin: () -> Unit
 ) {
     navigation(
-        startDestination = DestinosHelloApp.Login.rota,
-        route = DestinosHelloApp.LoginGraph.rota
+        startDestination = DestinosHelloApp.Login.rota, route = DestinosHelloApp.LoginGraph.rota
     ) {
         composable(
             route = DestinosHelloApp.Login.rota,
@@ -32,22 +32,18 @@ fun NavGraphBuilder.loginGraph(
 
             if (state.logado) {
                 LaunchedEffect(Unit) {
-                    navController.navegaLimpo(DestinosHelloApp.HomeGraph.rota)
+                    onNavegaParaHome()
                 }
             }
 
             val coroutineScope = rememberCoroutineScope()
 
             LoginTela(
-                state = state,
-                onClickLogar = {
+                state = state, onClickLogar = {
                     coroutineScope.launch {
                         viewModel.tentaLogar()
                     }
-                },
-                onClickCriarLogin = {
-                    navController.navigate(DestinosHelloApp.FormularioLogin.rota)
-                }
+                }, onClickCriarLogin = onNavegaParaFormularioLogin
             )
 
         }
@@ -60,18 +56,15 @@ fun NavGraphBuilder.loginGraph(
 
             val coroutineScope = rememberCoroutineScope()
 
-            FormularioLoginTela(
-                state = state,
-                onSalvar = {
-                    coroutineScope.launch {
-                        viewModel.salvarLogin()
-                    }
+            FormularioLoginTela(state = state, onSalvar = {
+                coroutineScope.launch {
+                    viewModel.salvarLogin()
                 }
-            )
+            })
 
             LaunchedEffect(state.voltarParaLogin) {
                 if (state.voltarParaLogin) {
-                    navController.navegaLimpo(DestinosHelloApp.Login.rota)
+                    onNavegaParaFormularioLogin()
                 }
             }
         }

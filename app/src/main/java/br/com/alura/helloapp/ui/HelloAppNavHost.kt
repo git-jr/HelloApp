@@ -1,7 +1,6 @@
 package br.com.alura.helloapp.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,21 +12,56 @@ import br.com.alura.helloapp.navigation.*
 
 @Composable
 fun HelloAppNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
+    navController: NavHostController, modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
         startDestination = DestinosHelloApp.SplashScreen.rota,
         modifier = modifier
     ) {
-        splashGraph(navController)
-        loginGraph(navController)
-        homeGraph(navController)
-        formularioContatoGraph(navController)
-        detalhesContatoGraph(navController)
-        usuariosGraph(navController)
-        buscaContatosGraph(navController)
+        splashGraph(onNavegaParaLogin = {
+            navController.navegaParaLoginDeslogado()
+        }, onNavegaParaHome = {
+            navController.navegaParaHome()
+        })
+        loginGraph(onNavegaParaHome = {
+            navController.navegaParaHome()
+        }, onNavegaParaFormularioLogin = {
+            navController.navegaParaFormlarioLogin()
+        })
+        homeGraph(onNavegaParaDetalhes = { idContato ->
+            navController.navegaParaDetalhes(idContato)
+        }, onNavegaParaFormularioContato = {
+            navController.navegaParaFormularioContato()
+        }, onNavegaParaDialgoUsuarios = { idUsuario ->
+            navController.navegaParaDialgoUsuarios(idUsuario)
+        }, onNavegaParaBuscaContatos = {
+            navController.navegaParaBuscaContatos()
+        })
+        formularioContatoGraph(onClickVoltar = {
+            navController.popBackStack()
+        })
+        detalhesContatoGraph(onClickVoltar = {
+            navController.popBackStack()
+        }, onNavegaParaDialgoUsuarios = { idContato ->
+            navController.navegaParaFormularioContato(idContato)
+        })
+        usuariosGraph(onClickVoltar = {
+            navController.popBackStack()
+        }, onNavegaParaLogin = {
+            navController.navegaParaLogin()
+        }, onNavegaParaHome = {
+            navController.navegaParaHome()
+        }, onNavegaGerenciaUsuarios = {
+            navController.navegaParaGerenciaUsuarios()
+        }, onNavegaParaFormularioUsuario = { idUsuario ->
+            navController.navegaParaFormularioUsuario(idUsuario)
+        })
+        buscaContatosGraph(onClickVoltar = {
+            navController.popBackStack()
+        }, onClickNavegaParaDetalhesContato = { idContato ->
+            navController.navegaParaDetalhes(idContato)
+        })
     }
 
     val viewModel = hiltViewModel<SessaoViewModel>()
@@ -65,10 +99,30 @@ fun NavHostController.navegaParaLoginDeslogado() {
     navegaDireto(DestinosHelloApp.LoginGraph.rota)
 }
 
-fun NavHostController.navegaParaDialgoUsuarios(idUsuarioAtual: String) {
-    navigate("${ListaUsuarios.rota}/$idUsuarioAtual")
+fun NavHostController.navegaParaDialgoUsuarios(idUsuario: String) {
+    navigate("${ListaUsuarios.rota}/$idUsuario")
 }
 
-fun NavHostController.navegaParaFormularioUsuario(idUsuarioAtual: String) {
-    navigate("${FormularioUsuario.rota}/$idUsuarioAtual")
+fun NavHostController.navegaParaFormularioUsuario(idUsuario: String) {
+    navigate("${FormularioUsuario.rota}/$idUsuario")
+}
+
+fun NavHostController.navegaParaLogin() {
+    navigate(DestinosHelloApp.Login.rota)
+}
+
+fun NavHostController.navegaParaHome() {
+    navegaLimpo(DestinosHelloApp.HomeGraph.rota)
+}
+
+fun NavHostController.navegaParaFormlarioLogin() {
+    navigate(DestinosHelloApp.FormularioLogin.rota)
+}
+
+fun NavHostController.navegaParaBuscaContatos() {
+    navigate(DestinosHelloApp.BuscaContatos.rota)
+}
+
+fun NavHostController.navegaParaGerenciaUsuarios() {
+    navigate(DestinosHelloApp.GerenciaUsuarios.rota)
 }

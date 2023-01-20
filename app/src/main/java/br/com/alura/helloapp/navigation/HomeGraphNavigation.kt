@@ -18,7 +18,10 @@ import br.com.alura.helloapp.ui.navegaParaDialgoUsuarios
 import br.com.alura.helloapp.ui.navegaParaFormularioContato
 
 fun NavGraphBuilder.homeGraph(
-    navController: NavHostController
+    onNavegaParaDetalhes: (Long) -> Unit,
+    onNavegaParaFormularioContato: () -> Unit,
+    onNavegaParaDialgoUsuarios: (String) -> Unit,
+    onNavegaParaBuscaContatos: () -> Unit
 ) {
     navigation(
         startDestination = DestinosHelloApp.ListaContatos.rota,
@@ -31,20 +34,16 @@ fun NavGraphBuilder.homeGraph(
             ListaContatosTela(
                 state = state,
                 onClickAbreDetalhes = { idContato ->
-                    navController.navegaParaDetalhes(idContato)
+                    onNavegaParaDetalhes(idContato)
                 },
                 onClickAbreCadastro = {
-                    navController.navegaParaFormularioContato()
+                    onNavegaParaFormularioContato()
                 },
                 onClickListaUsuarios = {
-                    navController.navegaParaDialgoUsuarios(state.usuarioAtual)
-//                    coroutineScope.launch {
-//                        viewModel.desloga()
-//                        navController.navegaParaLoginDeslogado()
-//                    }
+                    onNavegaParaDialgoUsuarios(state.usuarioAtual)
                 },
                 onClickBuscaContatos = {
-                    navController.navigate(DestinosHelloApp.BuscaContatos.rota)
+                    onNavegaParaBuscaContatos()
                 })
 
         }

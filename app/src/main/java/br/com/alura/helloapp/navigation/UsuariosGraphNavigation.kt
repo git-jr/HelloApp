@@ -20,7 +20,11 @@ import br.com.alura.helloapp.util.USUARIO_ATUAL
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.usuariosGraph(
-    navController: NavHostController
+    onClickVoltar: () -> Unit,
+    onNavegaParaLogin: () -> Unit,
+    onNavegaParaHome: () -> Unit,
+    onNavegaGerenciaUsuarios: () -> Unit,
+    onNavegaParaFormularioUsuario: (String) -> Unit,
 ) {
     navigation(
         startDestination = ListaUsuarios.rota,
@@ -41,20 +45,18 @@ fun NavGraphBuilder.usuariosGraph(
 
                 CaixaDialogoContasUsuario(
                     state = state,
-                    onClickDispensar = {
-                        navController.popBackStack()
-                    },
+                    onClickDispensar = onClickVoltar,
                     onClickAdicionarNovaConta = {
-                        navController.navigate(DestinosHelloApp.LoginGraph.rota)
+                        onNavegaParaLogin()
                     },
                     onClickListarContatosPorUsuario = { novoUsuario ->
                         coroutineScope.launch {
                             viewModel.alteraUsuarioAtual(novoUsuario)
-                            navController.navegaLimpo(DestinosHelloApp.HomeGraph.rota)
+                            onNavegaParaHome()
                         }
                     },
                     onClickGerenciarUsuarios = {
-                        navController.navigate(DestinosHelloApp.GerenciaUsuarios.rota)
+                        onNavegaGerenciaUsuarios()
                     }
                 )
             }
@@ -66,13 +68,13 @@ fun NavGraphBuilder.usuariosGraph(
             val viewModel = hiltViewModel<GerenciaUsuariosViewModel>()
             val state by viewModel.uiState.collectAsState()
 
-            GerenciaUsuariosTela(state = state,
+            GerenciaUsuariosTela(
+                state = state,
                 onClickAbreDetalhes = { usuarioAtual ->
-                    navController.navegaParaFormularioUsuario(usuarioAtual)
+                    onNavegaParaFormularioUsuario(usuarioAtual)
                 },
-                onClickVoltar = {
-                    navController.popBackStack()
-                })
+                onClickVoltar = onClickVoltar
+            )
         }
 
         composable(
@@ -85,19 +87,17 @@ fun NavGraphBuilder.usuariosGraph(
 
             FormularioUsuarioTela(
                 state = state,
-                onClickVoltar = {
-                    navController.popBackStack()
-                },
+                onClickVoltar = onClickVoltar,
                 onClickSalvar = {
                     coroutineScope.launch {
                         viewModel.atualiza()
-                        navController.popBackStack()
+                        onClickVoltar()
                     }
                 },
                 onClickApagar = {
                     coroutineScope.launch {
                         viewModel.apagaUsuario()
-                        navController.popBackStack()
+                        onClickVoltar()
                     }
                 }
             )

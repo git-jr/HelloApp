@@ -13,7 +13,8 @@ import br.com.alura.helloapp.ui.navegaParaDetalhes
 import br.com.alura.helloapp.ui.navegaParaDialgoUsuarios
 
 fun NavGraphBuilder.buscaContatosGraph(
-    navController: NavHostController
+    onClickVoltar: () -> Unit,
+    onClickNavegaParaDetalhesContato: (Long) -> Unit
 ) {
     composable(route = DestinosHelloApp.BuscaContatos.rota) {
         val viewModel = hiltViewModel<BuscaContatosViewModel>()
@@ -21,11 +22,9 @@ fun NavGraphBuilder.buscaContatosGraph(
 
         BuscaContatosTela(
             state = state,
-            onClickVoltar = {
-                navController.popBackStack()
-            },
+            onClickVoltar = onClickVoltar,
             onClickAbreDetalhes = { idContato ->
-                navController.navegaParaDetalhes(idContato)
+                onClickNavegaParaDetalhesContato(idContato)
             })
 
     }
