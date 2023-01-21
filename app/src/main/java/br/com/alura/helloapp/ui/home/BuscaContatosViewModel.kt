@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.preferences.PreferencesKey
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BuscaContatosViewModel @Inject constructor(
-    private val contatoDao: ContatoDao, private val dataStore: DataStore<Preferences>
+    private val contatoDao: ContatoDao,
+    private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -23,6 +25,16 @@ class BuscaContatosViewModel @Inject constructor(
         get() = _uiState.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            dataStore.data.collect {
+                val usuarioAtual = it[PreferencesKey.USUARIO_ATUAL].toString()
+                _uiState.value = _uiState.value.copy(
+                    usuarioAtual = usuarioAtual,
+                    contatos = contatoDao.buscaTodosPorUsuario(usuarioAtual).first()
+                )
+            }
+        }
+
         _uiState.update { state ->
             state.copy(onValorBuscaMudou = {
                 _uiState.value = _uiState.value.copy(
@@ -30,18 +42,6 @@ class BuscaContatosViewModel @Inject constructor(
                 )
                 buscaContatosPorValor()
             })
-        }
-
-        viewModelScope.launch {
-            dataStore.data.collect {
-                val usuarioAtual = it[PreferencesKey.USUARIO_ATUAL].toString()
-                val listaDeContatos = contatoDao.buscaTodosPorUsuario(usuarioAtual).first()
-
-                _uiState.value = _uiState.value.copy(
-                    usuarioAtual = usuarioAtual,
-                    contatos = listaDeContatos
-                )
-            }
         }
 
     }

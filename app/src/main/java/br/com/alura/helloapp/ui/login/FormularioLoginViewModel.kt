@@ -1,7 +1,5 @@
 package br.com.alura.helloapp.ui.login
 
-import android.database.sqlite.SQLiteConstraintException
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import br.com.alura.helloapp.data.Usuario
 import br.com.alura.helloapp.database.UsuarioDao
@@ -38,22 +36,12 @@ class FormularioLoginViewModel @Inject constructor(
                     _uiState.value = _uiState.value.copy(
                         senha = it
                     )
-                },
-                voltarParaLoginMudou = {
-                    _uiState.value = _uiState.value.copy(
-                        voltarParaLogin = it
-                    )
-                },
-                onErro = {
-                    _uiState.value = _uiState.value.copy(
-                        exibirErro = it
-                    )
-                },
+                }
             )
         }
     }
 
-    suspend fun salvarLogin() {
+    suspend fun salvaLogin() {
         with(_uiState.value) {
             try {
                 usuarioDao.insere(
@@ -63,9 +51,14 @@ class FormularioLoginViewModel @Inject constructor(
                         senha = senha
                     )
                 )
-                _uiState.value.voltarParaLoginMudou(true)
+                _uiState.value = _uiState.value.copy(
+                    voltarParaLogin = true
+                )
+
             } catch (e: Exception) {
-                _uiState.value.onErro(true)
+                _uiState.value = _uiState.value.copy(
+                    exibirErro = true
+                )
             }
         }
     }

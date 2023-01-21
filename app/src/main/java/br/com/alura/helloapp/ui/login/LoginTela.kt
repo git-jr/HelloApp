@@ -30,8 +30,8 @@ import br.com.alura.helloapp.ui.theme.HelloAppTheme
 fun LoginTela(
     state: LoginUiState,
     modifier: Modifier = Modifier,
-    onClickLogar: () -> Unit = {},
-    onClickCriarLogin: () -> Unit = {},
+    onClickLoga: () -> Unit = {},
+    onClickCriaLogin: () -> Unit = {},
 ) {
 
     Column(Modifier.fillMaxSize()) {
@@ -111,11 +111,11 @@ fun LoginTela(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(56.dp), onClick = onClickLogar
+                    .heightIn(56.dp), onClick = onClickLoga
             ) {
                 Text(text = stringResource(R.string.entrar))
             }
-            TextButton(onClick = onClickCriarLogin, Modifier.fillMaxWidth()) {
+            TextButton(onClick = onClickCriaLogin, Modifier.fillMaxWidth()) {
                 Text(text = stringResource(R.string.criar_nova_conta))
             }
         }

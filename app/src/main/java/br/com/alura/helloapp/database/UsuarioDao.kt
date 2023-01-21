@@ -18,11 +18,14 @@ interface UsuarioDao {
     @Query("SELECT * FROM Usuario")
     fun buscaTodos(): Flow<MutableList<Usuario>?>
 
+    @Query("SELECT * FROM Usuario where id != :idUsuario")
+    fun buscaTodosExceto(idUsuario: String): Flow<MutableList<Usuario>?>
+
     @Query("SELECT * FROM Usuario WHERE id = :nomeDeUsuario")
     fun buscaPorNomeDeUsuario(nomeDeUsuario: String): Flow<Usuario?>
 
     @Update
-    suspend fun atualizar(usuario: Usuario)
+    suspend fun atualiza(usuario: Usuario)
 
     @Delete
     suspend fun apaga(usuario: Usuario)

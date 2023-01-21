@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import br.com.alura.helloapp.DestinosHelloApp
@@ -14,7 +13,6 @@ import br.com.alura.helloapp.ui.login.FormularioLoginTela
 import br.com.alura.helloapp.ui.login.FormularioLoginViewModel
 import br.com.alura.helloapp.ui.login.LoginTela
 import br.com.alura.helloapp.ui.login.LoginViewModel
-import br.com.alura.helloapp.ui.navegaLimpo
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.loginGraph(
@@ -23,7 +21,8 @@ fun NavGraphBuilder.loginGraph(
     onNavegaParaLogin: () -> Unit,
 ) {
     navigation(
-        startDestination = DestinosHelloApp.Login.rota, route = DestinosHelloApp.LoginGraph.rota
+        startDestination = DestinosHelloApp.Login.rota,
+        route = DestinosHelloApp.LoginGraph.rota
     ) {
         composable(
             route = DestinosHelloApp.Login.rota,
@@ -40,11 +39,12 @@ fun NavGraphBuilder.loginGraph(
             val coroutineScope = rememberCoroutineScope()
 
             LoginTela(
-                state = state, onClickLogar = {
+                state = state,
+                onClickLoga = {
                     coroutineScope.launch {
                         viewModel.tentaLogar()
                     }
-                }, onClickCriarLogin = onNavegaParaFormularioLogin
+                }, onClickCriaLogin = onNavegaParaFormularioLogin
             )
 
         }
@@ -57,9 +57,9 @@ fun NavGraphBuilder.loginGraph(
 
             val coroutineScope = rememberCoroutineScope()
 
-            FormularioLoginTela(state = state, onSalvar = {
+            FormularioLoginTela(state = state, onSalva = {
                 coroutineScope.launch {
-                    viewModel.salvarLogin()
+                    viewModel.salvaLogin()
                 }
             })
 

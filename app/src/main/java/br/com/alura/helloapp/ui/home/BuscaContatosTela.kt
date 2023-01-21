@@ -26,14 +26,14 @@ fun BuscaContatosTela(
     state: BuscaContatosUiState,
     modifier: Modifier = Modifier,
     onClickAbreDetalhes: (Long) -> Unit = {},
-    onClickVoltar: () -> Unit = {}
+    onClickVolta: () -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             AppBarBuscaContatos(
                 onValorMudou = state.onValorBuscaMudou,
-                onClickVoltar = onClickVoltar,
+                onClickVolta = onClickVolta,
                 valor = state.valorBusca
             )
         },
@@ -53,7 +53,7 @@ fun BuscaContatosTela(
 fun AppBarBuscaContatos(
     valor: String,
     onValorMudou: (String) -> Unit = {},
-    onClickVoltar: () -> Unit = {}
+    onClickVolta: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -65,7 +65,7 @@ fun AppBarBuscaContatos(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = onClickVoltar
+                onClick = onClickVolta
             ) {
                 Icon(
                     Icons.Default.ArrowBack, contentDescription = stringResource(R.string.voltar)

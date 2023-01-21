@@ -3,7 +3,7 @@ package br.com.alura.helloapp
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import br.com.alura.helloapp.util.ID_CONTATO
-import br.com.alura.helloapp.util.USUARIO_ATUAL
+import br.com.alura.helloapp.util.ID_USUARIO_ATUAL
 
 sealed class DestinosHelloApp(val rota: String) {
     object LoginGraph : DestinosHelloApp("grafico_login")
@@ -43,9 +43,9 @@ object DetalhesContato {
 
 object ListaUsuarios {
     const val rota = "lista_usuarios"
-    const val rotaComArgumentos = "$rota/{$USUARIO_ATUAL}"
+    const val rotaComArgumentos = "$rota/{$ID_USUARIO_ATUAL}"
     val argumentos = listOf(
-        navArgument(USUARIO_ATUAL) {
+        navArgument(ID_USUARIO_ATUAL) {
             type = NavType.StringType
         }
     )
@@ -53,9 +53,9 @@ object ListaUsuarios {
 
 object FormularioUsuario {
     const val rota = "formulario_usuario"
-    const val rotaComArgumentos = "$rota/{$USUARIO_ATUAL}"
+    const val rotaComArgumentos = "$rota/{$ID_USUARIO_ATUAL}"
     val argumentos = listOf(
-        navArgument(USUARIO_ATUAL) {
+        navArgument(ID_USUARIO_ATUAL) {
             type = NavType.StringType
         }
     )

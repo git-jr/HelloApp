@@ -24,13 +24,13 @@ import br.com.alura.helloapp.ui.theme.HelloAppTheme
 fun FormularioUsuarioTela(
     state: FormularioUsuarioUiState,
     modifier: Modifier = Modifier,
-    onClickVoltar: () -> Unit = {},
-    onClickSalvar: () -> Unit = {},
-    onClickApagar: () -> Unit = {},
+    onClickVolta: () -> Unit = {},
+    onClickSalva: () -> Unit = {},
+    onClickApaga: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
-            FormularioUsuarioAppBar(onClickVoltar = onClickVoltar)
+            FormularioUsuarioAppBar(onClickVoltar = onClickVolta)
         },
     ) { paddingValues ->
 
@@ -73,26 +73,12 @@ fun FormularioUsuarioTela(
                     keyboardActions = (KeyboardActions(onNext = { focuAtual.moveFocus(FocusDirection.Next) }))
                 )
 
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = {
-                        Icon(imageVector = Icons.Default.Lock, contentDescription = null)
-                    },
-                    value = state.senha,
-                    onValueChange = state.onSenhaMudou,
-                    label = { Text(stringResource(id = R.string.senha)) },
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = (KeyboardActions(onNext = { focuAtual.moveFocus(FocusDirection.Next) }))
-                )
-
                 Spacer(Modifier.height(16.dp))
 
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(56.dp), onClick = onClickSalvar
+                        .heightIn(56.dp), onClick = onClickSalva
                 ) {
                     Text(text = stringResource(R.string.salvar))
                 }
@@ -123,7 +109,7 @@ fun FormularioUsuarioTela(
         CaixaDialogoConfirmacao(
             titulo = stringResource(R.string.tem_certeza),
             mensagem = stringResource(R.string.aviso_apagar_usuario),
-            onClikConfirma = onClickApagar,
+            onClikConfirma = onClickApaga,
             onClickCancela = { state.mostraMensagemExclusaoMudou(false) },
         )
     }

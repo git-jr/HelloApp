@@ -28,12 +28,12 @@ fun GerenciaUsuariosTela(
     state: GerenciaUsuariosUiState,
     modifier: Modifier = Modifier,
     onClickAbreDetalhes: (String) -> Unit = {},
-    onClickVoltar: () -> Unit = {}
+    onClickVolta: () -> Unit = {}
 ) {
     Scaffold(
         topBar = {
             AppBarGerenciaUsuarios(
-                onClickVoltar = onClickVoltar
+                onClickVoltar = onClickVolta
             )
         }
     ) { paddingValues ->

@@ -36,13 +36,13 @@ import br.com.alura.helloapp.ui.theme.HelloAppTheme
 fun CaixaDialogoContasUsuario(
     modifier: Modifier = Modifier,
     state: ListaUsuariosUiState,
-    onClickDispensar: () -> Unit = {},
-    onClickAdicionarNovaConta: () -> Unit = {},
-    onClickListarContatosPorUsuario: (String) -> Unit = {},
-    onClickGerenciarUsuarios: () -> Unit = {}
+    onClickDispensa: () -> Unit = {},
+    onClickAdicionaNovaConta: () -> Unit = {},
+    onClickListaContatosPorUsuario: (String) -> Unit = {},
+    onClickGerenciaUsuarios: () -> Unit = {}
 ) {
     Dialog(
-        onDismissRequest = onClickDispensar,
+        onDismissRequest = onClickDispensa,
         content = {
             Column(
                 modifier
@@ -73,7 +73,7 @@ fun CaixaDialogoContasUsuario(
                                 Icon(imageVector = Icons.Default.Close,
                                     contentDescription = stringResource(R.string.fechar),
                                     tint = Color.Gray,
-                                    modifier = Modifier.clickable { onClickDispensar() })
+                                    modifier = Modifier.clickable { onClickDispensa() })
                             }
                             Row(
                                 Modifier.fillMaxHeight(),
@@ -104,16 +104,20 @@ fun CaixaDialogoContasUsuario(
                                 .padding(start = 8.dp)
                                 .align(Alignment.CenterVertically)
                         ) {
-                            Text(
-                                modifier = Modifier.fillMaxWidth(),
-                                text = state.nome,
-                                fontWeight = FontWeight.Bold,
-                            )
-                            Text(
-                                modifier = Modifier.fillMaxWidth(),
-                                text = state.nomeDeUsuario,
-                                color = Color.Gray
-                            )
+                            state.nome?.let {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = it,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.nomeDeUsuario?.let {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = it,
+                                    color = Color.Gray
+                                )
+                            }
                         }
                     }
                 }
@@ -127,13 +131,13 @@ fun CaixaDialogoContasUsuario(
                 ) {
                     items(state.outrosUsuarios) { usuario ->
                         UsuarioItem(usuario) { nomeUsuario ->
-                            onClickListarContatosPorUsuario(nomeUsuario)
+                            onClickListaContatosPorUsuario(nomeUsuario)
                         }
                     }
                     item {
                         ItemsAcaoEmConta(
-                            onClickGerenciarUsuarios = onClickGerenciarUsuarios,
-                            onClickAdicionarNovaConta = onClickAdicionarNovaConta
+                            onClickGerenciarUsuarios = onClickGerenciaUsuarios,
+                            onClickAdicionarNovaConta = onClickAdicionaNovaConta
                         )
                     }
                 }
