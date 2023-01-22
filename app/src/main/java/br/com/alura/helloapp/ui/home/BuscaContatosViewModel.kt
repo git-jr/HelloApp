@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.preferences.PreferencesKey
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -46,7 +45,7 @@ class BuscaContatosViewModel @Inject constructor(
 
     }
 
-    fun buscaContatosPorValor() {
+    private fun buscaContatosPorValor() {
         with(_uiState) {
             viewModelScope.launch {
                 val contatos = contatoDao.buscaPorUsuarioEValor(

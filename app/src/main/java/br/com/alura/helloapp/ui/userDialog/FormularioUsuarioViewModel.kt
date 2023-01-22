@@ -85,7 +85,7 @@ class FormularioUsuarioViewModel @Inject constructor(
         verificaRotaDeVolta()
     }
 
-    suspend fun verificaRotaDeVolta() {
+    private suspend fun verificaRotaDeVolta() {
         val usarioLogado = dataStore.data.first()[PreferencesKey.USUARIO_ATUAL]
         val usuarioQueFoiApagado = _uiState.value.nomeUsuario
         if (usarioLogado == usuarioQueFoiApagado) {

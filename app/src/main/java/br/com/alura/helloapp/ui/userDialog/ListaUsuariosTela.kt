@@ -135,7 +135,7 @@ fun CaixaDialogoContasUsuario(
                         }
                     }
                     item {
-                        ItemsAcaoEmConta(
+                        ItensAcaoEmConta(
                             onClickGerenciarUsuarios = onClickGerenciaUsuarios,
                             onClickAdicionarNovaConta = onClickAdicionaNovaConta
                         )
@@ -148,14 +148,14 @@ fun CaixaDialogoContasUsuario(
 }
 
 @Composable
-private fun ItemsAcaoEmConta(
+private fun ItensAcaoEmConta(
     modifier: Modifier = Modifier,
     onClickGerenciarUsuarios: () -> Unit,
     onClickAdicionarNovaConta: () -> Unit
 ) {
     Column(
         modifier
-            .padding(vertical = 24.dp)
+            .padding(vertical = 8.dp)
             .fillMaxWidth()
     ) {
         Row(

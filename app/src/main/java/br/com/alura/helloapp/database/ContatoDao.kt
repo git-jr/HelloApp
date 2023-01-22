@@ -2,7 +2,7 @@ package br.com.alura.helloapp.database
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import br.com.alura.helloapp.data.Contato
 import kotlinx.coroutines.flow.Flow
@@ -21,9 +21,6 @@ interface ContatoDao {
 
     @Query("SELECT * FROM Contato WHERE id_usuario = :usuarioAtual")
     fun buscaTodosPorUsuario(usuarioAtual: String): Flow<List<Contato>>
-
-    @Query("SELECT * FROM Contato WHERE id_usuario = :usuarioAtual AND id = :idContato")
-    fun buscaPorIdDoUsuario(idContato: Long, usuarioAtual: String): Flow<Contato?>
 
     @Query("SELECT * FROM Contato WHERE id_usuario = :usuarioAtual AND (nome LIKE :valor || '%' or sobrenome LIKE :valor || '%')")
     fun buscaPorUsuarioEValor(usuarioAtual: String, valor: String): Flow<List<Contato>?>
