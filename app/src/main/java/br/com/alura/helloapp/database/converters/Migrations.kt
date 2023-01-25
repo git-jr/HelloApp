@@ -1,5 +1,8 @@
 package br.com.alura.helloapp.database.converters
 
+import androidx.room.DeleteColumn
+import androidx.room.RenameColumn
+import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
@@ -18,3 +21,21 @@ val MIGRATION_11_12 = object : Migration(11, 12) {
         database.execSQL("alter table ContatoCopia RENAME to Contato")
     }
 }
+
+
+@RenameColumn(tableName = "Usuario", fromColumnName = "usuario", toColumnName = "nomeDeUsuario")
+class Migration3To4 : AutoMigrationSpec
+
+@DeleteColumn(tableName = "Usuario", columnName = "id")
+class Migration4To5 : AutoMigrationSpec
+
+
+@DeleteColumn(tableName = "Usuario", columnName = "sobrenome")
+class Migration6To7 : AutoMigrationSpec
+
+@RenameColumn(tableName = "Contato", fromColumnName = "idUsuario", toColumnName = "nomeUsuario")
+class Migration7To8 : AutoMigrationSpec
+
+@RenameColumn(tableName = "Contato", fromColumnName = "nomeUsuario", toColumnName = "id_usuario")
+@RenameColumn(tableName = "Usuario", fromColumnName = "nomeDeUsuario", toColumnName = "id")
+class Migration12To13 : AutoMigrationSpec

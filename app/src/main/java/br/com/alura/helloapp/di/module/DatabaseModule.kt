@@ -1,10 +1,7 @@
 package br.com.alura.helloapp.di.module
 
 import android.content.Context
-import androidx.room.AutoMigration
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.database.HelloAppDatabase
 import br.com.alura.helloapp.database.UsuarioDao

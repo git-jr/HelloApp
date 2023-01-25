@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.preferences.PreferencesKey
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,19 +36,15 @@ class BuscaContatosViewModel @Inject constructor(
         viewModelScope.launch {
             dataStore.data.collect {
                 val usuarioAtual = it[PreferencesKey.USUARIO_ATUAL].toString()
-                val listaDeContatos = contatoDao.buscaTodosPorUsuario(usuarioAtual).first()
-
                 _uiState.value = _uiState.value.copy(
                     usuarioAtual = usuarioAtual,
-                    contatos = listaDeContatos
+                    contatos = contatoDao.buscaTodosPorUsuario(usuarioAtual).first()
                 )
             }
         }
-
-
     }
 
-    fun buscaContatosPorValor() {
+    private fun buscaContatosPorValor() {
         with(_uiState) {
             viewModelScope.launch {
                 val contatos = contatoDao.buscaPorUsuarioEValor(
@@ -66,5 +61,4 @@ class BuscaContatosViewModel @Inject constructor(
             }
         }
     }
-
 }

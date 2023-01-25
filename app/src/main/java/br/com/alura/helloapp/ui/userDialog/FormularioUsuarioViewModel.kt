@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class FormularioUsuarioViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -85,7 +84,7 @@ class FormularioUsuarioViewModel @Inject constructor(
         verificaRotaDeVolta()
     }
 
-    suspend fun verificaRotaDeVolta() {
+    private suspend fun verificaRotaDeVolta() {
         val usarioLogado = dataStore.data.first()[PreferencesKey.USUARIO_ATUAL]
         val usuarioQueFoiApagado = _uiState.value.nomeUsuario
         if (usarioLogado == usuarioQueFoiApagado) {

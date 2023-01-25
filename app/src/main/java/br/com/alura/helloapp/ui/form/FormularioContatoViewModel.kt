@@ -12,7 +12,6 @@ import br.com.alura.helloapp.extensions.converteParaDate
 import br.com.alura.helloapp.extensions.converteParaString
 import br.com.alura.helloapp.preferences.PreferencesKey
 import br.com.alura.helloapp.util.ID_CONTATO
-import br.com.alura.helloapp.util.ID_USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -72,7 +71,7 @@ class FormularioContatoViewModel @Inject constructor(
 
     private suspend fun carregaContato() {
         idContato?.let {
-            val contato = contatoDao.buscaPorIdDoUsuario(idContato, usuarioAtual = ID_USUARIO_ATUAL)
+            val contato = contatoDao.buscaPorId(idContato)
             contato.collect {
                 it?.let {
                     with(it) {

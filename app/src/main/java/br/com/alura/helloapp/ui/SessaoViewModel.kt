@@ -8,7 +8,6 @@ import br.com.alura.helloapp.preferences.PreferencesKey.LOGADO
 import br.com.alura.helloapp.preferences.PreferencesKey.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,7 +36,7 @@ class SessaoViewModel @Inject constructor(
         }
     }
 
-    suspend fun desloga() {
+    private suspend fun desloga() {
         _state.value = _state.value.copy(
             logado = false
         )
