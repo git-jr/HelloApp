@@ -16,7 +16,7 @@ import br.com.alura.helloapp.util.ID_USUARIO_ATUAL
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.usuariosGraph(
-    onClickVolta: () -> Unit,
+    onVolta: () -> Unit,
     onNavegaParaLogin: () -> Unit,
     onNavegaParaHome: () -> Unit,
     onNavegaGerenciaUsuarios: () -> Unit,
@@ -41,7 +41,7 @@ fun NavGraphBuilder.usuariosGraph(
 
                 CaixaDialogoContasUsuario(
                     state = state,
-                    onClickDispensa = onClickVolta,
+                    onClickDispensa = onVolta,
                     onClickAdicionaNovaConta = {
                         onNavegaParaLogin()
                     },
@@ -69,7 +69,7 @@ fun NavGraphBuilder.usuariosGraph(
                 onClickAbreDetalhes = { usuarioAtual ->
                     onNavegaParaFormularioUsuario(usuarioAtual)
                 },
-                onClickVolta = onClickVolta
+                onClickVolta = onVolta
             )
         }
 
@@ -83,18 +83,21 @@ fun NavGraphBuilder.usuariosGraph(
 
             FormularioUsuarioTela(
                 state = state,
-                onClickVolta = onClickVolta,
+                onClickVolta = onVolta,
                 onClickSalva = {
                     coroutineScope.launch {
                         viewModel.atualiza()
-                        onClickVolta()
+                        onVolta()
                     }
                 },
                 onClickApaga = {
                     coroutineScope.launch {
                         viewModel.apagaUsuario()
-                        onClickVolta()
+                        onVolta()
                     }
+                },
+                onClickMostraMensagemExclusao = {
+                    viewModel.onClickMostraMensagemExclusao()
                 }
             )
         }

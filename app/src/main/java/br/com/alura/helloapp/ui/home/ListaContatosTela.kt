@@ -34,21 +34,19 @@ fun ListaContatosTela(
 ) {
     Scaffold(topBar = {
         AppBarListaContatos(
-            onClickListaUsuarios = onClickListaUsuarios,
-            onClickBuscaContatos = onClickBuscaContatos
+            onClickListaUsuarios = onClickListaUsuarios, onClickBuscaContatos = onClickBuscaContatos
         )
-    },
-        floatingActionButton = {
-            FloatingActionButton(
-                backgroundColor = MaterialTheme.colors.primary,
-                onClick = { onClickAbreCadastro() },
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.adicionar_novo_contato)
-                )
-            }
-        }) { paddingValues ->
+    }, floatingActionButton = {
+        FloatingActionButton(
+            backgroundColor = MaterialTheme.colors.primary,
+            onClick = { onClickAbreCadastro() },
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = stringResource(R.string.adicionar_novo_contato)
+            )
+        }
+    }) { paddingValues ->
 
         LazyColumn(modifier.padding(paddingValues)) {
             items(state.contatos) { contato ->
@@ -62,29 +60,29 @@ fun ListaContatosTela(
 
 @Composable
 fun AppBarListaContatos(onClickListaUsuarios: () -> Unit, onClickBuscaContatos: () -> Unit) {
-    TopAppBar(title = { Text(text = stringResource(id = R.string.nome_do_app)) }, actions = {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onClickBuscaContatos) {
-                Icon(
-                    Icons.Default.Search, contentDescription = "Buscar"
+    TopAppBar(
+        title = { Text(text = stringResource(id = R.string.nome_do_app)) },
+        actions = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onClickBuscaContatos) {
+                    Icon(
+                        Icons.Default.Search, contentDescription = "Buscar"
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(8.dp))
+
+                AsyncImagePerfil(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            onClickListaUsuarios()
+                        },
                 )
+                Spacer(modifier = Modifier.size(8.dp))
             }
-
-            Spacer(modifier = Modifier.size(8.dp))
-
-            AsyncImagePerfil(
-                urlImagem = "contato.fotoPerfil",
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .clickable {
-                        onClickListaUsuarios()
-                    },
-            )
-            Spacer(modifier = Modifier.size(8.dp))
-        }
-    }
-
+        },
     )
 }
 

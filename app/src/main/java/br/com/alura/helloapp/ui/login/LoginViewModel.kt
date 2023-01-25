@@ -52,10 +52,14 @@ class LoginViewModel @Inject constructor(
             }
             logaUsuario()
         } else {
-            _uiState.value = _uiState.value.copy(
-                exibirErro = true
-            )
+            exibeErro()
         }
+    }
+
+    private fun exibeErro() {
+        _uiState.value = _uiState.value.copy(
+            exibirErro = true
+        )
     }
 
     private fun logaUsuario() {

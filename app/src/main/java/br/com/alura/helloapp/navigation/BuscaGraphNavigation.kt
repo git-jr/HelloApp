@@ -13,7 +13,7 @@ import br.com.alura.helloapp.ui.navegaParaDetalhes
 import br.com.alura.helloapp.ui.navegaParaDialgoUsuarios
 
 fun NavGraphBuilder.buscaContatosGraph(
-    onClickVoltar: () -> Unit,
+    onVolta: () -> Unit,
     onClickNavegaParaDetalhesContato: (Long) -> Unit
 ) {
     composable(route = DestinosHelloApp.BuscaContatos.rota) {
@@ -22,12 +22,10 @@ fun NavGraphBuilder.buscaContatosGraph(
 
         BuscaContatosTela(
             state = state,
-            onClickVolta = onClickVoltar,
+            onClickVolta = onVolta,
             onClickAbreDetalhes = { idContato ->
                 onClickNavegaParaDetalhesContato(idContato)
             })
 
     }
-
 }
-

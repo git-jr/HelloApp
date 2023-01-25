@@ -27,6 +27,7 @@ fun FormularioUsuarioTela(
     onClickVolta: () -> Unit = {},
     onClickSalva: () -> Unit = {},
     onClickApaga: () -> Unit = {},
+    onClickMostraMensagemExclusao: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -89,9 +90,7 @@ fun FormularioUsuarioTela(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(56.dp),
-                    onClick = {
-                        state.mostraMensagemExclusaoMudou(true)
-                    },
+                    onClick = onClickMostraMensagemExclusao,
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.Red
                     )

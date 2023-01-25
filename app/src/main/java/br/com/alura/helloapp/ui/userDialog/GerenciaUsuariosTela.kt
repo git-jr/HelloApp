@@ -33,7 +33,7 @@ fun GerenciaUsuariosTela(
     Scaffold(
         topBar = {
             AppBarGerenciaUsuarios(
-                onClickVoltar = onClickVolta
+                onClickVolta = onClickVolta
             )
         }
     ) { paddingValues ->
@@ -51,13 +51,13 @@ fun GerenciaUsuariosTela(
 
 @Composable
 fun AppBarGerenciaUsuarios(
-    onClickVoltar: () -> Unit = {}
+    onClickVolta: () -> Unit = {}
 ) {
 
     TopAppBar(title = { Text(text = "Gerenciar usuários") },
         navigationIcon = {
             IconButton(
-                onClick = onClickVoltar
+                onClick = onClickVolta
             ) {
                 Icon(
                     Icons.Default.ArrowBack,
@@ -80,7 +80,7 @@ fun UsuarioGerenciaItem(
             Modifier.padding(16.dp),
         ) {
             AsyncImagePerfil(
-                urlImagem = "url-imagem", modifier = Modifier
+                modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
             )

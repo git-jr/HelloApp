@@ -21,7 +21,7 @@ fun HelloAppNavHost(
     ) {
         splashGraph(
             onNavegaParaLogin = {
-                navController.limpaBackStackENavegaParaLogin()
+                navController.NavegaParaLoginElimpaBackStack()
             },
             onNavegaParaHome = {
                 navController.navegaParaHome()
@@ -35,7 +35,7 @@ fun HelloAppNavHost(
                 navController.navegaParaFormlarioLogin()
             },
             onNavegaParaLogin = {
-                navController.limpaBackStackENavegaParaLogin()
+                navController.NavegaParaLoginElimpaBackStack()
             },
         )
         homeGraph(
@@ -58,7 +58,7 @@ fun HelloAppNavHost(
             },
         )
         detalhesContatoGraph(
-            onClickVolta = {
+            onVolta = {
                 navController.popBackStack()
             },
             onNavegaParaDialgoUsuarios = { idContato ->
@@ -66,7 +66,7 @@ fun HelloAppNavHost(
             },
         )
         usuariosGraph(
-            onClickVolta = {
+            onVolta = {
                 navController.popBackStack()
             },
             onNavegaParaLogin = {
@@ -83,7 +83,7 @@ fun HelloAppNavHost(
             },
         )
         buscaContatosGraph(
-            onClickVoltar = {
+            onVolta = {
                 navController.popBackStack()
             },
             onClickNavegaParaDetalhesContato = { idContato ->
@@ -96,7 +96,7 @@ fun HelloAppNavHost(
     val state = viewModel.uiState.collectAsState()
 
     if (!state.value.logado) {
-        navController.limpaBackStackENavegaParaLogin()
+        navController.NavegaParaLoginElimpaBackStack()
     }
 }
 
@@ -121,7 +121,7 @@ fun NavHostController.navegaParaFormularioContato(idContato: Long = 0L) {
     navigate("${FormularioContato.rota}/$idContato")
 }
 
-fun NavHostController.limpaBackStackENavegaParaLogin() {
+fun NavHostController.NavegaParaLoginElimpaBackStack() {
     navegaLimpo(DestinosHelloApp.LoginGraph.rota)
 }
 

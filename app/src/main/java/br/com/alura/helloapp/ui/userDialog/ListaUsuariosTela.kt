@@ -94,7 +94,6 @@ fun CaixaDialogoContasUsuario(
                         Modifier.padding(vertical = 16.dp)
                     ) {
                         AsyncImagePerfil(
-                            urlImagem = "url-imagem",
                             modifier = Modifier
                                 .size(46.dp)
                                 .clip(CircleShape)
@@ -216,7 +215,7 @@ fun UsuarioItem(usuario: Usuario, onClickPerfiUsuario: (nomeUsuario: String) -> 
             }
     ) {
         AsyncImagePerfil(
-            urlImagem = "url-imagem", modifier = Modifier
+            modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape)
         )

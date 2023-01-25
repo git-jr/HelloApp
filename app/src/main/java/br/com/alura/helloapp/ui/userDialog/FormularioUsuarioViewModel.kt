@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class FormularioUsuarioViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -38,10 +39,6 @@ class FormularioUsuarioViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(
                     nome = it
                 )
-            }, mostraMensagemExclusaoMudou = {
-                _uiState.value = _uiState.value.copy(
-                    mostraMensagemExclusao = it
-                )
             })
         }
     }
@@ -53,9 +50,7 @@ class FormularioUsuarioViewModel @Inject constructor(
             usuario.collect { usuarioBuscado ->
                 usuarioBuscado?.let {
                     _uiState.value = _uiState.value.copy(
-                        nomeUsuario = it.nomeDeUsuario,
-                        nome = it.nome,
-                        senha = it.senha.toString()
+                        nomeUsuario = it.nomeDeUsuario, nome = it.nome, senha = it.senha.toString()
                     )
                 }
             }
@@ -66,9 +61,7 @@ class FormularioUsuarioViewModel @Inject constructor(
         with(_uiState.value) {
             usuarioDao.atualiza(
                 Usuario(
-                    nomeDeUsuario = nomeUsuario,
-                    nome = nome,
-                    senha = null
+                    nomeDeUsuario = nomeUsuario, nome = nome, senha = null
                 )
             )
         }
@@ -92,5 +85,11 @@ class FormularioUsuarioViewModel @Inject constructor(
                 it.remove(PreferencesKey.USUARIO_ATUAL)
             }
         }
+    }
+
+    fun onClickMostraMensagemExclusao() {
+        _uiState.value = _uiState.value.copy(
+            mostraMensagemExclusao = true
+        )
     }
 }
