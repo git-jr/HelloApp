@@ -1,5 +1,6 @@
 package br.com.alura.helloapp.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,14 +27,17 @@ fun BuscaContatosTela(
     state: BuscaContatosUiState,
     modifier: Modifier = Modifier,
     onClickAbreDetalhes: (Long) -> Unit = {},
-    onClickVoltar: () -> Unit = {}
+    onClickVolta: () -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             AppBarBuscaContatos(
-                onValorMudou = state.onValorBuscaMudou,
-                onClickVoltar = onClickVoltar,
+                onValorMudou = {
+                    Log.e("valor", "valor na appbar: $it ")
+                    state.onValorBuscaMudou(it)
+                },
+                onClickVolta = onClickVolta,
                 valor = state.valorBusca
             )
         },
@@ -53,7 +57,7 @@ fun BuscaContatosTela(
 fun AppBarBuscaContatos(
     valor: String,
     onValorMudou: (String) -> Unit = {},
-    onClickVoltar: () -> Unit = {}
+    onClickVolta: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -65,7 +69,7 @@ fun AppBarBuscaContatos(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = onClickVoltar
+                onClick = onClickVolta
             ) {
                 Icon(
                     Icons.Default.ArrowBack, contentDescription = stringResource(R.string.voltar)
@@ -74,9 +78,7 @@ fun AppBarBuscaContatos(
 
             BasicTextField(
                 value = valor,
-                onValueChange = {
-                    onValorMudou(it)
-                },
+                onValueChange = onValorMudou,
                 decorationBox = { valorInterno ->
                     Box(
                         Modifier

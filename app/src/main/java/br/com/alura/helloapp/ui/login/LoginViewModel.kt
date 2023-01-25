@@ -1,14 +1,10 @@
 package br.com.alura.helloapp.ui.login
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import br.com.alura.helloapp.database.UsuarioDao
-import br.com.alura.helloapp.preferences.PreferencesKey
 import br.com.alura.helloapp.preferences.PreferencesKey.LOGADO
 import br.com.alura.helloapp.preferences.PreferencesKey.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,11 +34,6 @@ class LoginViewModel @Inject constructor(
                         senha = it
                     )
                 },
-                onErro = {
-                    _uiState.value = _uiState.value.copy(
-                        exibirErro = it
-                    )
-                },
             )
         }
     }
@@ -52,19 +43,18 @@ class LoginViewModel @Inject constructor(
             .buscaPorNomeDeUsuario(_uiState.value.usuario)
             .first()
 
-        if (usuarioBuscado != null) {
-            val senha = usuarioBuscado.senha
-            if (senha == _uiState.value.senha) {
-                dataStore.edit {
-                    it[LOGADO] = true
-                    it[USUARIO_ATUAL] = _uiState.value.usuario
-                }
-                logaUsuario()
-            } else {
-                _uiState.value.onErro(true)
+        if (usuarioBuscado != null
+            && usuarioBuscado.senha == _uiState.value.senha
+        ) {
+            dataStore.edit {
+                it[LOGADO] = true
+                it[USUARIO_ATUAL] = _uiState.value.usuario
             }
+            logaUsuario()
         } else {
-            _uiState.value.onErro(true)
+            _uiState.value = _uiState.value.copy(
+                exibirErro = true
+            )
         }
     }
 
@@ -74,5 +64,4 @@ class LoginViewModel @Inject constructor(
         )
     }
 }
-
 

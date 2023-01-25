@@ -22,7 +22,7 @@ fun NavGraphBuilder.buscaContatosGraph(
 
         BuscaContatosTela(
             state = state,
-            onClickVoltar = onClickVoltar,
+            onClickVolta = onClickVoltar,
             onClickAbreDetalhes = { idContato ->
                 onClickNavegaParaDetalhesContato(idContato)
             })

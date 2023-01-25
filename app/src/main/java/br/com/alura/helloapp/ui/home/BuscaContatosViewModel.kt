@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.database.ContatoDao
 import br.com.alura.helloapp.preferences.PreferencesKey
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BuscaContatosViewModel @Inject constructor(
-    private val contatoDao: ContatoDao, private val dataStore: DataStore<Preferences>
+    private val contatoDao: ContatoDao,
+    private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -43,6 +45,7 @@ class BuscaContatosViewModel @Inject constructor(
                 )
             }
         }
+
 
     }
 

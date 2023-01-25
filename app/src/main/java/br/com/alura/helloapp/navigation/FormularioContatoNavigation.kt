@@ -16,7 +16,7 @@ import br.com.alura.helloapp.util.ID_CONTATO
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.formularioContatoGraph(
-    onClickVoltar: () -> Unit
+    onVolta: () -> Unit
 ) {
     composable(
         route = FormularioContato.rotaComArgumentos,
@@ -39,13 +39,13 @@ fun NavGraphBuilder.formularioContatoGraph(
 
             FormularioContatoTela(
                 state = state,
-                onClickSalvar = {
+                onClickSalva = {
                     coroutineScope.launch {
-                        viewModel.salvar()
+                        viewModel.salva()
                     }
-                    onClickVoltar()
+                    onVolta()
                 },
-                onCarregarImagem = {
+                onCarregaImagem = {
                     viewModel.carregaImagem(it)
                 }
             )

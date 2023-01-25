@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.database.UsuarioDao
 import br.com.alura.helloapp.preferences.PreferencesKey
-import br.com.alura.helloapp.util.USUARIO_ATUAL
+import br.com.alura.helloapp.util.ID_USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ class ListaUsuariosViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    private val usuarioAtual = savedStateHandle.get<String>(USUARIO_ATUAL)
+    private val usuarioAtual = savedStateHandle.get<String>(ID_USUARIO_ATUAL)
 
     private val _uiState = MutableStateFlow(ListaUsuariosUiState())
     val uiState: StateFlow<ListaUsuariosUiState>
@@ -34,23 +34,21 @@ class ListaUsuariosViewModel @Inject constructor(
     }
 
     private suspend fun carregaDados() {
-        val usuario = usuarioAtual?.let { usuarioDao.buscaPorNomeDeUsuario(it).first() }
-
-        usuario?.let {
-            _uiState.value = _uiState.value.copy(
-                nome = usuario.nome,
-                nomeDeUsuario = usuario.nomeDeUsuario
-            )
-        }
-
         usuarioAtual?.let {
-            usuarioDao.buscaTodos()
-                .filterNotNull().collect { usuariosBuscados ->
-                    usuariosBuscados.remove(usuario)
+            usuarioDao.buscaPorNomeDeUsuario(usuarioAtual)
+                .first()?.let { usuario ->
+                    _uiState.value = _uiState.value.copy(
+                        nome = usuario.nome, nomeDeUsuario = usuario.nomeDeUsuario
+                    )
+                }
+
+            usuarioDao.buscaTodosExceto(usuarioAtual).collect { usuariosBuscados ->
+                usuariosBuscados?.let {
                     _uiState.value = _uiState.value.copy(
                         outrosUsuarios = usuariosBuscados
                     )
                 }
+            }
         }
     }
 

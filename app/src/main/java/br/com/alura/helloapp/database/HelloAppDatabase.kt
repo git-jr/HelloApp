@@ -16,15 +16,15 @@ import br.com.alura.helloapp.database.converters.Converters
     version = 13,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 2, to = 3),
-        AutoMigration(
-            from = 3, to = 4,
-            spec = HelloAppDatabase.Migration3To4::class
-        ),
-        AutoMigration(
-            from = 4, to = 5,
-            spec = HelloAppDatabase.Migration4To5::class
-        ),
+//        AutoMigration(from = 2, to = 3),
+//        AutoMigration(
+//            from = 3, to = 4,
+//            spec = HelloAppDatabase.Migration3To4::class
+//        ),
+//        AutoMigration(
+//            from = 4, to = 5,
+//            spec = HelloAppDatabase.Migration4To5::class
+//        ),
         AutoMigration(from = 5, to = 6),
         AutoMigration(from = 6, to = 7, spec = HelloAppDatabase.Migration6To7::class),
         AutoMigration(from = 7, to = 8, spec = HelloAppDatabase.Migration7To8::class),

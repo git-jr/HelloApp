@@ -37,8 +37,8 @@ class ListaContatosViewModel @Inject constructor(
 
         }
         viewModelScope.launch {
-            val contatos = contatoDao.buscaTodosPorUsuario(_uiState.value.usuarioAtual)
-            contatos.collect { contatosBuscados ->
+            val contatos = _uiState.value.usuarioAtual?.let { contatoDao.buscaTodosPorUsuario(it) }
+            contatos?.collect { contatosBuscados ->
                 _uiState.value = _uiState.value.copy(
                     contatos = contatosBuscados
                 )

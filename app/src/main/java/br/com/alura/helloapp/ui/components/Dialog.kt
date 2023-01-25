@@ -149,13 +149,8 @@ fun CaixaDialogoImagemPreview() {
 fun CaixaDialogoConfirmacaoPreview() {
     HelloAppTheme {
         CaixaDialogoConfirmacao(
-            "Tem certeza?",
-            "Ao apagar um usuário todos os contatos associdados a ele serão perdidos",
-            {
-
-            }
-        ) {
-        }
+            titulo = stringResource(R.string.tem_certeza),
+            mensagem = stringResource(R.string.aviso_apagar_usuario),
+        )
     }
 }
-

@@ -32,7 +32,7 @@ import br.com.alura.helloapp.ui.theme.HelloAppTheme
 fun FormularioLoginTela(
     state: FormularioLoginUiState,
     modifier: Modifier = Modifier,
-    onSalvar: () -> Unit = {}
+    onSalva: () -> Unit = {}
 ) {
     Column(Modifier.fillMaxSize()) {
         Column(
@@ -133,7 +133,7 @@ fun FormularioLoginTela(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(56.dp),
-                onClick = onSalvar
+                onClick = onSalva
             ) {
                 Text(text = stringResource(R.string.criar))
             }

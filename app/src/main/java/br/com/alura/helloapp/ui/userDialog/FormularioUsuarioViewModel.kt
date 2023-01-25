@@ -9,9 +9,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.alura.helloapp.data.Usuario
 import br.com.alura.helloapp.database.UsuarioDao
 import br.com.alura.helloapp.preferences.PreferencesKey
-import br.com.alura.helloapp.preferences.PreferencesKey.LOGADO
-import br.com.alura.helloapp.preferences.PreferencesKey.USUARIO_ATUAL
-import br.com.alura.helloapp.util.USUARIO_ATUAL
+import br.com.alura.helloapp.util.ID_USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -25,7 +23,7 @@ class FormularioUsuarioViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    private val nomeUsuario = savedStateHandle.get<String>(br.com.alura.helloapp.util.USUARIO_ATUAL)
+    private val nomeUsuario = savedStateHandle.get<String>(ID_USUARIO_ATUAL)
 
     private val _uiState = MutableStateFlow(FormularioUsuarioUiState())
     val uiState: StateFlow<FormularioUsuarioUiState>
@@ -40,10 +38,6 @@ class FormularioUsuarioViewModel @Inject constructor(
             state.copy(onNomeMudou = {
                 _uiState.value = _uiState.value.copy(
                     nome = it
-                )
-            }, onSenhaMudou = {
-                _uiState.value = _uiState.value.copy(
-                    senha = it
                 )
             }, mostraMensagemExclusaoMudou = {
                 _uiState.value = _uiState.value.copy(
@@ -60,7 +54,9 @@ class FormularioUsuarioViewModel @Inject constructor(
             usuario.collect { usuarioBuscado ->
                 usuarioBuscado?.let {
                     _uiState.value = _uiState.value.copy(
-                        nomeUsuario = it.nomeDeUsuario, nome = it.nome, senha = it.senha.toString()
+                        nomeUsuario = it.nomeDeUsuario,
+                        nome = it.nome,
+                        senha = it.senha.toString()
                     )
                 }
             }
@@ -69,11 +65,11 @@ class FormularioUsuarioViewModel @Inject constructor(
 
     suspend fun atualiza() {
         with(_uiState.value) {
-            usuarioDao.atualizar(
+            usuarioDao.atualiza(
                 Usuario(
                     nomeDeUsuario = nomeUsuario,
                     nome = nome,
-                    senha = senha,
+                    senha = null
                 )
             )
         }
@@ -82,11 +78,7 @@ class FormularioUsuarioViewModel @Inject constructor(
     suspend fun apagaUsuario() {
         with(_uiState.value) {
             usuarioDao.apaga(
-                Usuario(
-                    nomeDeUsuario = nomeUsuario,
-                    nome = nome,
-                    senha = senha,
-                )
+                Usuario(nomeDeUsuario = nomeUsuario)
             )
             mostraMensagemExclusaoMudou(false)
         }
@@ -102,5 +94,4 @@ class FormularioUsuarioViewModel @Inject constructor(
             }
         }
     }
-
 }
