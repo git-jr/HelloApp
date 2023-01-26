@@ -35,18 +35,15 @@ class BuscaContatosViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            dataStore.data.collect {
-                val usuarioAtual = it[PreferencesKey.USUARIO_ATUAL].toString()
-                val listaDeContatos = contatoDao.buscaTodosPorUsuario(usuarioAtual).first()
+            val usuarioAtual = dataStore.data.first()[PreferencesKey.USUARIO_ATUAL].toString()
 
+            contatoDao.buscaTodosPorUsuario(usuarioAtual).collect { listaDeContatos ->
                 _uiState.value = _uiState.value.copy(
                     usuarioAtual = usuarioAtual,
                     contatos = listaDeContatos
                 )
             }
         }
-
-
     }
 
     fun buscaContatosPorValor() {
@@ -66,5 +63,4 @@ class BuscaContatosViewModel @Inject constructor(
             }
         }
     }
-
 }
