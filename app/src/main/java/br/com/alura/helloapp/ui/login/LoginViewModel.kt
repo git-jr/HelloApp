@@ -2,20 +2,19 @@ package br.com.alura.helloapp.ui.login
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
-import br.com.alura.helloapp.preferences.PreferencesKey
+import br.com.alura.helloapp.database.UsuarioDao
+import br.com.alura.helloapp.preferences.PreferencesKey.LOGADO
+import br.com.alura.helloapp.preferences.PreferencesKey.USUARIO_ATUAL
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
+    private val usuarioDao: UsuarioDao
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -35,32 +34,32 @@ class LoginViewModel @Inject constructor(
                         senha = it
                     )
                 },
-                onErro = {
-                    _uiState.value = _uiState.value.copy(
-                        exibirErro = it
-                    )
-                },
             )
         }
     }
 
     suspend fun tentaLogar() {
+        val usuarioBuscado = usuarioDao
+            .buscaPorNomeDeUsuario(_uiState.value.usuario)
+            .first()
 
-        dataStore.data.collect { preferences ->
-            val senha = preferences[PreferencesKey.SENHA]
-            val usuario = preferences[PreferencesKey.USUARIO]
-
-            if (usuario == _uiState.value.usuario &&
-                senha == _uiState.value.senha
-            ) {
-                dataStore.edit {
-                    it[booleanPreferencesKey("logado")] = true
-                }
-                logaUsuario()
-            } else {
-                _uiState.value.onErro(true)
+        if (usuarioBuscado != null
+            && usuarioBuscado.senha == _uiState.value.senha
+        ) {
+            dataStore.edit {
+                it[LOGADO] = true
+                it[USUARIO_ATUAL] = _uiState.value.usuario
             }
+            logaUsuario()
+        } else {
+            exibeErro()
         }
+    }
+
+    private fun exibeErro() {
+        _uiState.value = _uiState.value.copy(
+            exibirErro = true
+        )
     }
 
     private fun logaUsuario() {
@@ -69,5 +68,4 @@ class LoginViewModel @Inject constructor(
         )
     }
 }
-
 

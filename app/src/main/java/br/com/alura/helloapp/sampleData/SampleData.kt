@@ -1,9 +1,10 @@
 package br.com.alura.helloapp.sampleData
 
 import br.com.alura.helloapp.data.Contato
+import br.com.alura.helloapp.data.Usuario
 import java.util.*
 
-var contatosExemplo: List<Contato> = listOf(
+val contatosExemplo: List<Contato> = listOf(
     Contato(
         nome = "Ana",
         sobrenome = "Clara",
@@ -23,5 +24,15 @@ var contatosExemplo: List<Contato> = listOf(
         sobrenome = "Conhecido",
         telefone = "321",
         fotoPerfil = "urlTesteParaDarErro"
+    )
+)
+
+val usuariosExemplo = listOf(
+    Usuario(
+        nome = "Manuel",
+        nomeDeUsuario = "@manuel_gomes"
+    ), Usuario(
+        nome = "Clara",
+        nomeDeUsuario = "@clara123"
     )
 )
